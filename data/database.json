@@ -1,0 +1,95 @@
+{
+  "floors": [
+    {
+      "name": "Lầu 1",
+      "id": 1
+    },
+    {
+      "name": "Lầu 2",
+      "id": 2
+    },
+    {
+      "name": "Lầu 3",
+      "id": 3
+    },
+    {
+      "name": "Lầu 4",
+      "id": 4
+    },
+    {
+      "name": "Lầu 5",
+      "id": 5
+    }
+  ],
+  "room-types": [
+    {
+      "id": 2,
+      "name": "Double Room"
+    },
+    {
+      "id": 3,
+      "name": "Twin Room"
+    },
+    {
+      "id": 4,
+      "name": "Triple Room"
+    },
+    {
+      "name": "Standard",
+      "id": 5
+    }
+  ],
+  "rooms": [
+    {
+      "id": 1,
+      "roomName": "101",
+      "floor": "Lầu 1",
+      "roomType": "stardard",
+      "bedNumber": 1,
+      "peopleNumber": 2
+    },
+    {
+      "roomName": "201",
+      "floor": "Lầu 2",
+      "roomType": "Twin Room",
+      "bedNumber": "1",
+      "peopleNumber": "2",
+      "id": 4
+    }
+  ],
+  "customers": [
+    {
+      "id": 3,
+      "fullName": "Võ Tấn Nguyên",
+      "birthDay": "17/08/1998",
+      "phoneNumber": "0968578108",
+      "idCard": "206204159",
+      "company": "",
+      "address": "Ho Chi Minh",
+      "city": "HCM",
+      "memberType": ""
+    },
+    {
+      "id": 3,
+      "fullName": "Võ Tấn Nguyên",
+      "birthDay": "17/08/1998",
+      "phoneNumber": "0968578108",
+      "idCard": "206204159",
+      "company": "",
+      "address": "Ho Chi Minh",
+      "city": "HCM",
+      "memberType": ""
+    },
+    {
+      "id": 3,
+      "fullName": "Võ Tấn Nguyên",
+      "birthDay": "17/08/1998",
+      "phoneNumber": "0968578108",
+      "idCard": "206204159",
+      "company": "",
+      "address": "Ho Chi Minh",
+      "city": "HCM",
+      "memberType": ""
+    }
+  ]
+}

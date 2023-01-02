@@ -1,0 +1,13 @@
+.room-setting-list {
+   position: absolute;
+   z-index: 1;
+   top: 100%;
+   left: 100%;
+   border: 1px solid red;
+   border-radius: 10px;
+   background-color: #fff;
+   display: flex;
+   flex-direction: column;
+   white-space: nowrap;
+   overflow: hidden;
+}

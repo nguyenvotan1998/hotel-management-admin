@@ -1,0 +1,38 @@
+@import "../../App.scss";
+
+.container {
+   border: 3px double $border-container--color;
+   background-color: #fff;
+   &__header {
+      color: #fff;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+   }
+   &__title {
+      padding: 10px;
+      background-color: red;
+   }
+
+   &__btn-group {
+      padding: 10px;
+      display: flex;
+      justify-content: flex-end;
+   }
+
+   &__body {
+      display: flex;
+   }
+
+   &__body > div {
+      flex: 1;
+   }
+
+   &__body > div + div {
+      margin-left: 20px;
+   }
+
+   &__footer {
+      height: 50px;
+   }
+}

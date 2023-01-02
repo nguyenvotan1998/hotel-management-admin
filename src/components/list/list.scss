@@ -1,0 +1,14 @@
+@import "../../App.scss";
+.list {
+   &__header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid $border-container--color;
+      padding: 10px;
+   }
+
+   &__content {
+      display: flex;
+   }
+}

@@ -1,0 +1,80 @@
+@import "../../App.scss";
+
+.sidebar {
+   width: 200px;
+   height: 100%;
+   border-right: 1px solid rgb(213, 213, 213);
+
+   // TODO: Logo of Sidebar
+   &__logo {
+      height: 60px;
+      border-bottom: 1px solid rgb(213, 213, 213);
+      display: flex;
+      justify-content: space-evenly;
+      align-items: center;
+      .logo {
+         background: linear-gradient(
+            90deg,
+            rgba(196, 0, 0, 1) 0%,
+            rgba(255, 109, 0, 1) 20%,
+            rgba(255, 204, 79, 1) 40%,
+            rgba(255, 254, 0, 1) 50%,
+            rgba(142, 142, 142, 1) 60%,
+            rgba(102, 102, 102, 1) 80%,
+            rgba(0, 0, 0, 1) 100%
+         );
+         background-clip: text;
+         color: transparent;
+         font-size: 25px;
+      }
+
+      .icon {
+         padding: 0;
+         font-size: 30px;
+      }
+   }
+
+   &__list-link {
+      padding: 10px 20px;
+      font-size: 20px;
+
+      .item-link {
+         a {
+            display: flex;
+            justify-content: space-between;
+         }
+      }
+
+      .item-link:not(:first-child) {
+         margin-top: 10px;
+      }
+      a::nth-chi2ld() {
+      }
+      // margin-right: 20px;
+   }
+}
+ul {
+   list-style: none;
+}
+
+a {
+   text-decoration: none;
+   color: #000;
+   display: flex;
+   align-items: center;
+}
+
+.active {
+   color: $btn--color;
+}
+.open {
+   display: block;
+}
+
+.hidden {
+   display: none;
+}
+
+.sub-menu-lv2 {
+   font-size: 16px;
+}
