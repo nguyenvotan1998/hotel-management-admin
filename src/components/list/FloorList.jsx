@@ -10,14 +10,31 @@ import { ModalContext } from "../../App";
 import { Add } from "@mui/icons-material";
 
 export default function FloorList(props) {
-   const [floor] = useFetch("http://localhost:8000/floors");
+   const { data, loading, error } = useFetch("http://localhost:8000/floors");
+
    const [openForm, setOpenForm] = useState(false);
+
+   const renderData = data?.map((data) => (
+      <tr key={data.id}>
+         <td>{data.id}</td>
+         <td>{data.name}</td>
+         <td>
+            <BsPencil className="icon icon__edit" />
+         </td>
+         <td>
+            <BsTrash
+               className="icon icon__delete"
+               onClick={() => deleteFloor(data.id)}
+            />
+         </td>
+      </tr>
+   ));
 
    function deleteFloor(id) {
       fetch(`http://localhost:8000/floors/${id}`, {
          method: "delete",
       });
-      window.location.reload();
+      window.location.reload(false);
    }
 
    return (
@@ -39,25 +56,12 @@ export default function FloorList(props) {
                </tr>
             </thead>
             <tbody>
-               {floor &&
-                  floor.map((floor) => (
-                     <tr key={floor.id}>
-                        <td>{floor.id}</td>
-                        <td>{floor.name}</td>
-                        <td>
-                           <BsPencil
-                              className="icon icon__edit"
-                              // onClick={() => setOpen(true)}
-                           />
-                        </td>
-                        <td>
-                           <BsTrash
-                              className="icon icon__delete"
-                              onClick={() => deleteFloor(floor.id)}
-                           />
-                        </td>
-                     </tr>
-                  ))}
+               {loading && (
+                  <tr>
+                     <td>Loading ... </td>
+                  </tr>
+               )}
+               {data && renderData}
             </tbody>
          </table>
       </div>

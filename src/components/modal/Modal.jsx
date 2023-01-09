@@ -1,18 +1,29 @@
 import "./modal.scss";
-import { useContext } from "react";
 import { FaRegTimesCircle } from "react-icons/fa";
-import { ModalContext } from "../../App";
 
 export default function Modal(props) {
+   const closeOutSide = (e) => {
+      e.stopPropagation();
+      const modal = document.getElementsByClassName("modal")[0];
+      if (e.target == modal) {
+         props.setOpen(false);
+      }
+   };
+
+   const closeByIcon = (e) => {
+      e.stopPropagation();
+      props.setOpen(false);
+   };
+
    return (
-      <div className="modal">
+      <div className="modal" onClick={(e) => closeOutSide(e)}>
          <div className="modal__overlay"></div>
          <div className="modal__content">
             <div className="modal__header">
                <h2>{props.title}</h2>
                <FaRegTimesCircle
                   className="icon"
-                  onClick={() => props.setOpen(false)}
+                  onClick={(e) => closeByIcon(e)}
                />
             </div>
             <div className="modal__body">{props.body}</div>

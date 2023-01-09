@@ -1,23 +1,49 @@
-import { useState } from "react";
+import React from "react";
+import { useState, useEffect, useRef } from "react";
 import useFetch from "../hooks/useFetch";
 import Modal from "../modal/Modal";
 
 export default function AddRoom(props) {
-   const [floorData] = useFetch("http://localhost:8000/floors");
-   const [roomTypeData] = useFetch("http://localhost:8000/room-types");
+   useEffect(() => {
+      Promise.all([
+         fetch("http://localhost:8000/floors").then((value) => value.json()),
+         fetch("http://localhost:8000/room-types").then((value) =>
+            value.json()
+         ),
+      ])
+         .then(([floors, roomTypes]) => {
+            setList(floors);
+            setList2(roomTypes);
+         })
+         .catch((err) => {
+            console.log(err);
+         });
+      floorRef.current.focus();
+   }, []);
 
-   const [floor, setFloor] = useState();
-   const [roomType, setRoomType] = useState();
-   const [roomName, setRoomName] = useState();
-   const [bedNumber, setBedNumber] = useState();
-   const [peopleNumber, setPeopleNumber] = useState();
-
-   const handleFloor = (e) => {
-      console.log(e);
-   };
+   const [list, setList] = useState();
+   const [list2, setList2] = useState();
+   const [floor, setFloor] = useState("Lầu 1");
+   const [roomType, setRoomType] = useState("Nhỏ");
+   const [roomName, setRoomName] = useState(null);
+   const [bedNumber, setBedNumber] = useState(1);
+   const [peopleNumber, setPeopleNumber] = useState(2);
+   const floorRef = useRef();
+   const roomTypeRef = useRef();
 
    const handleSubmit = (event) => {
       event.preventDefault();
+      // Promise.all([
+      //    fetch("http://localhost:8000/floors").then((value) => value.json()),
+      //    fetch("http://localhost:8000/rooms").then((value) => value.json()),
+      // ])
+      //    .then(([floors, rooms]) => {
+      //       setFloors(floors);
+      //       setRooms(rooms);
+      //    })
+      //    .catch((err) => {
+      //       console.log(err);
+      //    });
       fetch("http://localhost:8000/rooms", {
          method: "post",
          headers: { "Content-Type": "application/json" },
@@ -29,14 +55,16 @@ export default function AddRoom(props) {
             peopleNumber: peopleNumber,
          }),
       });
+      fetch("http://localhost:8000/room-status", {
+         method: "post",
+         headers: { "Content-Type": "application/json" },
+         body: JSON.stringify({
+            room: roomName,
+            status: "empty",
+         }),
+      });
       window.location.reload();
    };
-   const handleChange = (event) => {
-      //   setFloorName(event.target.value);
-   };
-
-   console.log(floor);
-   console.log(roomType);
 
    return (
       <>
@@ -47,24 +75,30 @@ export default function AddRoom(props) {
                <>
                   <label>
                      Lầu:
-                     <select onChange={(e) => setFloor(e.target.value)}>
-                        {floorData &&
-                           floorData.map((data) => (
-                              <option key={data.id} value={data.name}>
-                                 {data.name}
-                              </option>
-                           ))}
+                     <select
+                        ref={floorRef}
+                        value={floor}
+                        onChange={(e) => setFloor(e.target.value)}
+                     >
+                        {list?.map((data) => (
+                           <React.Fragment key={data.id}>
+                              <option value={data.name}>{data.name}</option>
+                           </React.Fragment>
+                        ))}
                      </select>
                   </label>
                   <label>
                      Loại phòng:
-                     <select onChange={(e) => setRoomType(e.target.value)}>
-                        {roomTypeData &&
-                           roomTypeData.map((data) => (
-                              <option key={data.id} value={data.name}>
-                                 {data.name}
-                              </option>
-                           ))}
+                     <select
+                        ref={roomTypeRef}
+                        value={roomType}
+                        onChange={(e) => setRoomType(e.target.value)}
+                     >
+                        {list2?.map((data) => (
+                           <React.Fragment key={data.id}>
+                              <option value={data.name}>{data.name}</option>
+                           </React.Fragment>
+                        ))}
                      </select>
                   </label>
                   <label>
@@ -80,6 +114,7 @@ export default function AddRoom(props) {
                      <input
                         type="text"
                         name="bedNumber"
+                        value={bedNumber}
                         onChange={(e) => setBedNumber(e.target.value)}
                      />
                   </label>
@@ -88,6 +123,7 @@ export default function AddRoom(props) {
                      <input
                         type="text"
                         name="peopleNumber"
+                        value={peopleNumber}
                         onChange={(e) => setPeopleNumber(e.target.value)}
                      />
                   </label>

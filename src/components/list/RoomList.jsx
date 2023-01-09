@@ -1,25 +1,38 @@
 import "./list.scss";
-import { useEffect, useState, useContext } from "react";
 import useFetch from "../hooks/useFetch";
-import Modal from "../modal/Modal";
-import AddFloor from "../form/AddFloor";
-import Container from "../container/Container";
 import { BsTrash } from "react-icons/bs";
 import { BsPencil } from "react-icons/bs";
-import { ModalContext } from "../../App";
-import { Add } from "@mui/icons-material";
-// import useFetch from "../hooks/useFetch";
 
 export default function RoomList() {
-   const [room] = useFetch("http://localhost:8000/rooms");
+   const { data, loading, error } = useFetch("http://localhost:8000/rooms");
 
-   function addRoom() {}
+   const renderData = data?.map((data) => (
+      <tr key={data.id}>
+         <td>{data.id}</td>
+         <td>{data.roomName}</td>
+         <td>{data.floor}</td>
+         <td>{data.roomType}</td>
+         <td>{data.bedNumber}</td>
+         <td>{data.peopleNumber}</td>
+         <td>
+            <BsPencil className="icon icon__edit" />
+         </td>
+         <td>
+            <BsTrash
+               className="icon icon__delete"
+               onClick={() => deleteRoom(data.id)}
+            />
+         </td>
+      </tr>
+   ));
+
    function deleteRoom(id) {
       fetch(`http://localhost:8000/rooms/${id}`, {
          method: "delete",
       });
       window.location.reload();
    }
+
    return (
       <div className="list">
          <table>
@@ -36,26 +49,12 @@ export default function RoomList() {
                </tr>
             </thead>
             <tbody>
-               {room &&
-                  room.map((room) => (
-                     <tr key={room.id}>
-                        <td>{room.id}</td>
-                        <td>{room.roomName}</td>
-                        <td>{room.floor}</td>
-                        <td>{room.roomType}</td>
-                        <td>{room.bedNumber}</td>
-                        <td>{room.peopleNumber}</td>
-                        <td>
-                           <BsPencil className="icon icon__edit" />
-                        </td>
-                        <td>
-                           <BsTrash
-                              className="icon icon__delete"
-                              onClick={() => deleteRoom(room.id)}
-                           />
-                        </td>
-                     </tr>
-                  ))}
+               {loading && (
+                  <tr>
+                     <td>Loading ... </td>
+                  </tr>
+               )}
+               {data && renderData}
             </tbody>
          </table>
       </div>

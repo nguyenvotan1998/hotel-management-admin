@@ -10,7 +10,6 @@ import Container from "../../components/container/Container";
 import FloorList from "../../components/list/FloorList";
 import RoomTypeList from "../../components/list/RoomTypeList";
 import RoomList from "../../components/list/RoomList";
-import { ModalContext } from "../../App";
 
 export default function RoomPage() {
    const [open, setOpen] = useState(false);

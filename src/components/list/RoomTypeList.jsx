@@ -7,14 +7,36 @@ import AddFloor from "../form/AddFloor";
 import AddRoomType from "../form/AddRoomType";
 
 export default function RoomTypeList() {
-   const [roomType] = useFetch("http://localhost:8000/room-types");
+   const { data, loading, error } = useFetch(
+      "http://localhost:8000/room-types"
+   );
    const [openForm, setOpenForm] = useState(false);
+
+   const renderData = data?.map((data) => (
+      <tr key={data.id}>
+         <td>{data.id}</td>
+         <td>{data.name}</td>
+         <td>
+            <BsPencil className="icon icon__edit" />
+         </td>
+         <td>
+            <BsTrash
+               className="icon icon__delete"
+               onClick={() => deleteRoomType(data.id)}
+            />
+         </td>
+      </tr>
+   ));
 
    function deleteRoomType(id) {
       fetch(`http://localhost:8000/room-types/${id}`, {
          method: "delete",
       });
       window.location.reload();
+   }
+
+   if (error) {
+      console.log(error);
    }
 
    return (
@@ -36,25 +58,12 @@ export default function RoomTypeList() {
                </tr>
             </thead>
             <tbody>
-               {roomType &&
-                  roomType.map((roomType) => (
-                     <tr key={roomType.id}>
-                        <td>{roomType.id}</td>
-                        <td>{roomType.name}</td>
-                        <td>
-                           <BsPencil
-                              className="icon icon__edit"
-                              // onClick={() => setOpen(true)}
-                           />
-                        </td>
-                        <td>
-                           <BsTrash
-                              className="icon icon__delete"
-                              onClick={() => deleteRoomType(roomType.id)}
-                           />
-                        </td>
-                     </tr>
-                  ))}
+               {loading && (
+                  <tr>
+                     <td>Loading ... </td>
+                  </tr>
+               )}
+               {data && renderData}
             </tbody>
          </table>
       </div>

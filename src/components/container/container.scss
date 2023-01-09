@@ -3,6 +3,7 @@
 .container {
    border: 3px double $border-container--color;
    background-color: #fff;
+   box-shadow: rgba(17, 12, 46, 0.15) 0px 48px 100px 0px;
    &__header {
       color: #fff;
       display: flex;
@@ -15,7 +16,7 @@
    }
 
    &__btn-group {
-      padding: 10px;
+      padding: 10px 10px 0 10px;
       display: flex;
       justify-content: flex-end;
    }
@@ -26,10 +27,6 @@
 
    &__body > div {
       flex: 1;
-   }
-
-   &__body > div + div {
-      margin-left: 20px;
    }
 
    &__footer {

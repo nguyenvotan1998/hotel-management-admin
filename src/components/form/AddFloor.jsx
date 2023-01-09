@@ -1,8 +1,13 @@
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import Modal from "../modal/Modal";
 
 export default function AddFloor(props) {
    const [floorName, setFloorName] = useState();
+   const floor = useRef();
+
+   useEffect(() => {
+      floor.current.focus();
+   }, []);
 
    const handleSubmit = (e) => {
       e.preventDefault();
@@ -13,11 +18,7 @@ export default function AddFloor(props) {
             name: floorName,
          }),
       });
-      window.location.reload();
-   };
-
-   const handleChange = (e) => {
-      setFloorName(e.target.value);
+      window.location.reload(false);
    };
 
    return (
@@ -31,8 +32,9 @@ export default function AddFloor(props) {
                      Tên lầu:
                      <input
                         type="text"
+                        ref={floor}
                         name="floorName"
-                        onChange={handleChange}
+                        onChange={(e) => setFloorName(e.target.value)}
                      />
                   </label>
                </>

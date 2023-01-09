@@ -1,8 +1,6 @@
 import "./container.scss";
-import { useState } from "react";
-export default function Container(props) {
-   //    const [isFooter, setIsFooter] = useState(false);
 
+export default function Container(props) {
    return (
       <div className="container">
          <div className="container__header">

@@ -15,46 +15,74 @@
     {
       "name": "Lầu 4",
       "id": 4
-    },
-    {
-      "name": "Lầu 5",
-      "id": 5
     }
   ],
   "room-types": [
     {
-      "id": 2,
-      "name": "Double Room"
+      "name": "Nhỏ",
+      "id": 1
     },
     {
-      "id": 3,
-      "name": "Twin Room"
+      "name": "Trung",
+      "id": 2
     },
     {
-      "id": 4,
-      "name": "Triple Room"
+      "name": "Lớn",
+      "id": 3
     },
     {
-      "name": "Standard",
-      "id": 5
+      "name": "Vip",
+      "id": 4
     }
   ],
   "rooms": [
     {
-      "id": 1,
       "roomName": "101",
       "floor": "Lầu 1",
-      "roomType": "stardard",
+      "roomType": "Nhỏ",
       "bedNumber": 1,
-      "peopleNumber": 2
+      "peopleNumber": 2,
+      "id": 1
+    },
+    {
+      "roomName": "102",
+      "floor": "Lầu 1",
+      "roomType": "Trung",
+      "bedNumber": 1,
+      "peopleNumber": 2,
+      "id": 2
+    },
+    {
+      "roomName": "103",
+      "floor": "Lầu 1",
+      "roomType": "Lớn",
+      "bedNumber": 1,
+      "peopleNumber": 2,
+      "id": 3
     },
     {
       "roomName": "201",
       "floor": "Lầu 2",
-      "roomType": "Twin Room",
-      "bedNumber": "1",
-      "peopleNumber": "2",
+      "roomType": "Nhỏ",
+      "bedNumber": 1,
+      "peopleNumber": 2,
       "id": 4
+    },
+    {
+      "roomName": "202",
+      "floor": "Lầu 2",
+      "roomType": "Trung",
+      "bedNumber": 1,
+      "peopleNumber": 2,
+      "id": 5
+    },
+    {
+      "roomName": "203",
+      "floor": "Lầu 2",
+      "roomType": "Lớn",
+      "bedNumber": 1,
+      "peopleNumber": 2,
+      "id": 6
     }
   ],
   "customers": [
@@ -90,6 +118,40 @@
       "address": "Ho Chi Minh",
       "city": "HCM",
       "memberType": ""
+    }
+  ],
+  "room-status": [
+    {
+      "room": "101",
+      "status": "empty",
+      "id": 1
+    },
+    {
+      "room": "102",
+      "status": "hours",
+      "id": 2,
+      "customer": "Vo Tan Nguyen",
+      "hoursCheckIn": "13:04"
+    },
+    {
+      "room": "103",
+      "status": "hours",
+      "id": 3
+    },
+    {
+      "room": "201",
+      "status": "empty",
+      "id": 4
+    },
+    {
+      "room": "202",
+      "status": "empty",
+      "id": 5
+    },
+    {
+      "room": "203",
+      "status": "empty",
+      "id": 6
     }
   ]
 }

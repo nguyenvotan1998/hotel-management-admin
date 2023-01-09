@@ -1,52 +1,84 @@
 import "./room-status-list.scss";
+import { useState, useEffect, useRef } from "react";
+
 import useFetch from "../hooks/useFetch";
 import RoomStatus from "../room-status/RoomStatus";
-
-const roomNumber = [
-   {
-      id: 1,
-      room: "01",
-   },
-   {
-      id: 2,
-      room: "02",
-   },
-   {
-      id: 3,
-      room: "03",
-   },
-];
+import { Fragment } from "react";
 
 export default function RoomStatusList() {
-   const [floor] = useFetch("http://localhost:8000/floors");
-   const [room] = useFetch("http://localhost:8000/rooms");
+   const [floors, setFloors] = useState();
+   const [rooms, setRooms] = useState();
+   const [status, setStatus] = useState();
+
+   useEffect(() => {
+      Promise.all([
+         fetch("http://localhost:8000/floors").then((value) => value.json()),
+         fetch("http://localhost:8000/rooms").then((value) => value.json()),
+         fetch("http://localhost:8000/room-status").then((value) =>
+            value.json()
+         ),
+      ])
+         .then(([floors, rooms, status]) => {
+            setFloors(floors);
+            setRooms(rooms);
+            setStatus(status);
+         })
+         .catch((err) => {
+            console.log(err);
+         });
+   }, []);
+
    return (
       <div className="wrapper">
-         {floor &&
-            floor.map((floor) => (
-               <div key={floor.id} className="floor">
-                  <h2>{floor.name}</h2>
-                  <div className="room-status-container">
-                     {room &&
-                        room.map(
-                           (room) => {
-                              if (floor.name.localeCompare(room.floor) == 0)
-                                 return (
-                                    <RoomStatus
-                                       key={room.id}
-                                       roomNumber={room.roomName}
-                                    />
-                                 );
-                           }
+         {floors?.map((f) => (
+            <div key={f.id} className="floor">
+               <h2>{f.name}</h2>
+               <div key={f.id} className="room-status-container">
+                  {rooms?.map(
+                     (r) =>
+                        f.name === r.floor ? (
+                           status?.map((s) =>
+                              r.roomName === s.room && s.status === "empty" ? (
+                                 <RoomStatus
+                                    key={r.id}
+                                    bg="white"
+                                    roomNumber={r.roomName}
+                                    rooms={rooms}
+                                    status={s.status}
+                                 />
+                              ) : r.roomName === s.room &&
+                                s.status === "hours" ? (
+                                 <RoomStatus
+                                    key={r.id}
+                                    bg="red"
+                                    rooms={rooms}
+                                    status={s.status}
+                                    roomNumber={r.roomName}
+                                    startDay={s.hoursCheckIn}
+                                    customerName={s.customer}
+                                 />
+                              ) : (
+                                 <Fragment key={s.room}></Fragment>
+                              )
+                           )
+                        ) : (
+                           <Fragment key={r.id}></Fragment>
+                        )
+                     // f.name === r.floor ? (
+                     //    <RoomStatus
+                     //       key={r.id}
+                     //       roomNumber={r.roomName}
+                     //       rooms={rooms}
+                     //       status={status}
 
-                           // <RoomStatus
-                           //    key={room.id}
-                           //    roomNumber={room.roomName}
-                           // />
-                        )}
-                  </div>
+                     //    />
+                     // ) : (
+                     //    <Fragment key={r.id}></Fragment>
+                     // )
+                  )}
                </div>
-            ))}
+            </div>
+         ))}
       </div>
    );
 }
