@@ -15,6 +15,12 @@ import {
    redirect,
 } from "react-router-dom";
 
+const menu = [
+   {
+      icon: "",
+   },
+];
+
 function Sidebar() {
    const [open1, setOpen1] = useState(false);
    const [open2, setOpen2] = useState(false);
@@ -50,8 +56,30 @@ function Sidebar() {
                >
                   <BiBed />
                   Room
-                  {open2 ? <IoIosArrowUp /> : <IoIosArrowDown />}
+                  {/* {open2 ? (
+                     <IoIosArrowUp class="up" />
+                  ) : ( */}
+                  <IoIosArrowDown
+                     className={(e) =>
+                        open2 ? "dropdown activeDrop" : "dropdown"
+                     }
+                  />
+                  {/* )} */}
                </NavLink>
+               <ul
+                  className={
+                     open2 ? "sub-menu-lv2 open" : "sub-menu-lv2 hidden"
+                  }
+               >
+                  <li>
+                     <NavLink to={`/rooms/room-information`}>
+                        Information
+                     </NavLink>
+                  </li>
+                  <li>
+                     <NavLink to={`/rooms/room-prices`}>Prices</NavLink>
+                  </li>
+               </ul>
             </li>
             <li className="item-link">
                <NavLink

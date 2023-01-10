@@ -153,5 +153,29 @@
       "status": "empty",
       "id": 6
     }
+  ],
+  "room-prices": [
+    {
+      "roomType": "Nhỏ",
+      "method": "hours",
+      "price": "100000",
+      "late": "40000",
+      "id": 1
+    },
+    {
+      "roomType": "Trung",
+      "method": "hours",
+      "price": "120000",
+      "late": "40000",
+      "id": 2
+    },
+    {
+      "roomType": "Nhỏ",
+      "method": "days",
+      "price": "300000",
+      "early": "40000",
+      "late": "40000",
+      "id": 3
+    }
   ]
 }

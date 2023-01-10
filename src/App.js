@@ -8,6 +8,7 @@ import CustomerPage from "./pages/customers/CustomerPage";
 import Revenue from "./pages/customers/revenue/Revenue";
 import Blacklist from "./pages/customers/blacklist/Blacklist";
 import Birthday from "./pages/customers/birthday/Birthday";
+import RoomPrices from "./pages/room/prices/RoomPrices";
 
 function Main() {
    return (
@@ -15,6 +16,8 @@ function Main() {
          <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/rooms" element={<RoomPage />} />
+            <Route path="/rooms/room-information" element={<RoomPage />} />
+            <Route path="/rooms/room-prices" element={<RoomPrices />} />
             <Route path="/customers/revenue" element={<Revenue />} />
             <Route path="/customers" element={<CustomerPage />}>
                {/* <Route path="/customers/promotion" element={<Home />} /> */}

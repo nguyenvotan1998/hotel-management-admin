@@ -1,12 +1,7 @@
-import { useEffect, useState, useContext } from "react";
-import { BsPencil } from "react-icons/bs";
-import { BsTrash } from "react-icons/bs";
+import { useState } from "react";
 import "./room-page.scss";
-import useFetch from "../../components/hooks/useFetch";
-import Modal from "../../components/modal/Modal";
-import AddFloor from "../../components/form/AddFloor";
-import AddRoom from "../../components/form/AddRoom";
 import Container from "../../components/container/Container";
+import AddRoom from "../../components/form/add/AddRoom";
 import FloorList from "../../components/list/FloorList";
 import RoomTypeList from "../../components/list/RoomTypeList";
 import RoomList from "../../components/list/RoomList";

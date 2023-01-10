@@ -3,7 +3,7 @@ import { Outlet } from "react-router-dom";
 import Container from "../../components/container/Container";
 import CustomerList from "../../components/list/CustomerList";
 import Modal from "../../components/modal/Modal";
-import AddCustomer from "../../components/form/AddCustomer";
+import AddCustomer from "../../components/form/add/AddCustomer";
 
 export default function CustomerPage() {
    const [open, setOpen] = useState(false);

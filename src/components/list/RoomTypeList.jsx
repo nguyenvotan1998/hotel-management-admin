@@ -1,10 +1,9 @@
 import "./list.scss";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import useFetch from "../hooks/useFetch";
 import { BsTrash } from "react-icons/bs";
 import { BsPencil } from "react-icons/bs";
-import AddFloor from "../form/AddFloor";
-import AddRoomType from "../form/AddRoomType";
+import AddRoomType from "../form/add/AddRoomType";
 
 export default function RoomTypeList() {
    const { data, loading, error } = useFetch(
@@ -33,10 +32,6 @@ export default function RoomTypeList() {
          method: "delete",
       });
       window.location.reload();
-   }
-
-   if (error) {
-      console.log(error);
    }
 
    return (

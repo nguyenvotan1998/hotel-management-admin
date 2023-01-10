@@ -1,7 +1,6 @@
 import React from "react";
 import { useState, useEffect, useRef } from "react";
-import useFetch from "../hooks/useFetch";
-import Modal from "../modal/Modal";
+import Modal from "../../modal/Modal";
 
 export default function AddRoom(props) {
    useEffect(() => {

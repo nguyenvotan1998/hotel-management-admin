@@ -1,53 +1,51 @@
 import "./list.scss";
-import { useState } from "react";
 import useFetch from "../hooks/useFetch";
-import AddFloor from "../form/add/AddFloor";
 import { BsTrash } from "react-icons/bs";
 import { BsPencil } from "react-icons/bs";
+export default function PriceList() {
+   const { data, loading, error } = useFetch(
+      "http://localhost:8000/room-prices"
+   );
 
-export default function FloorList(props) {
-   const { data, loading, error } = useFetch("http://localhost:8000/floors");
-
-   const [openForm, setOpenForm] = useState(false);
+   const deletePrice = (id) => {
+      fetch(`http://localhost:8000/room-prices/${id}`, {
+         method: "delete",
+      });
+      window.location.reload();
+   };
 
    const render = (array) =>
       array?.map((res) => (
          <tr key={res.id}>
             <td>{res.id}</td>
-            <td>{res.name}</td>
+            <td>{res.roomType}</td>
+            <td>{res.method}</td>
+            <td>{res.price}</td>
+            <td>{res.early}</td>
+            <td>{res.late}</td>
             <td>
                <BsPencil className="icon icon__edit" />
             </td>
             <td>
                <BsTrash
                   className="icon icon__delete"
-                  onClick={() => deleteFloor(res.id)}
+                  onClick={() => deletePrice(res.id)}
                />
             </td>
          </tr>
       ));
 
-   function deleteFloor(id) {
-      fetch(`http://localhost:8000/floors/${id}`, {
-         method: "delete",
-      });
-      window.location.reload(false);
-   }
-
    return (
       <div className="list">
-         <div className="list__header">
-            <h3 className="title list__title">Thông tin lầu</h3>
-            <button className="btn btn-add" onClick={() => setOpenForm(true)}>
-               Thêm lầu
-            </button>
-            {openForm && <AddFloor setOpenForm={setOpenForm} />}
-         </div>
          <table>
             <thead>
                <tr>
                   <th>Id</th>
-                  <th>Name</th>
+                  <th>Room Type</th>
+                  <th>Method</th>
+                  <th>Price</th>
+                  <th>Early</th>
+                  <th>Late</th>
                   <th>Edit</th>
                   <th>Delete</th>
                </tr>
@@ -55,6 +53,10 @@ export default function FloorList(props) {
             <tbody>
                {loading && (
                   <tr>
+                     <td>Loading ... </td>
+                     <td>Loading ... </td>
+                     <td>Loading ... </td>
+                     <td>Loading ... </td>
                      <td>Loading ... </td>
                      <td>Loading ... </td>
                      <td>

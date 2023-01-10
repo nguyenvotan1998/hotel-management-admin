@@ -1,38 +1,40 @@
-import { useState } from "react";
-import Modal from "../modal/Modal";
+import { useState, useRef, useEffect } from "react";
+import Modal from "../../modal/Modal";
 
-export default function AddRoomType(props) {
-   const [roomTypeName, setRoomTypeName] = useState();
+export default function AddFloor(props) {
+   const [floorName, setFloorName] = useState();
+   const floor = useRef();
+
+   useEffect(() => {
+      floor.current.focus();
+   }, []);
 
    const handleSubmit = (e) => {
       e.preventDefault();
-      fetch("http://localhost:8000/room-types", {
+      fetch("http://localhost:8000/floors", {
          method: "post",
          headers: { "Content-Type": "application/json" },
          body: JSON.stringify({
-            name: roomTypeName,
+            name: floorName,
          }),
       });
-      window.location.reload();
-   };
-
-   const handleChange = (e) => {
-      setRoomTypeName(e.target.value);
+      window.location.reload(false);
    };
 
    return (
       <>
          <Modal
-            title="Thêm thêm loại phòng"
+            title="Thêm khách hàng"
             setOpen={props.setOpenForm}
             body={
                <>
                   <label>
-                     Tên loại phòng:
+                     Tên lầu:
                      <input
                         type="text"
-                        name="roomTypeName"
-                        onChange={handleChange}
+                        ref={floor}
+                        name="floorName"
+                        onChange={(e) => setFloorName(e.target.value)}
                      />
                   </label>
                </>

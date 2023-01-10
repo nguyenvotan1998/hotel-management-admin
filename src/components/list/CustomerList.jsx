@@ -1,14 +1,10 @@
 import { useEffect, useState, useContext } from "react";
 import useFetch from "../hooks/useFetch";
-import Modal from "../modal/Modal";
-import AddFloor from "../form/AddFloor";
-import Container from "../container/Container";
 import { BsTrash } from "react-icons/bs";
 import { BsPencil } from "react-icons/bs";
-import { ModalContext } from "../../App";
 
 export default function CustomerList() {
-   const [customerData] = useFetch("http://localhost:8000/customers");
+   const { data, loading, error } = useFetch("http://localhost:8000/customers");
 
    function deleteCustomer(id) {
       fetch(`http://localhost:8000/customers/${id}`, {
@@ -36,8 +32,8 @@ export default function CustomerList() {
             </tr>
          </thead>
          <tbody>
-            {customerData &&
-               customerData.map((customer) => (
+            {data &&
+               data.map((customer) => (
                   <tr key={customer.id}>
                      <th>1</th>
                      <th>{customer.id}</th>

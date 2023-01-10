@@ -72,7 +72,7 @@ export default function Hours(props) {
    //    const currentTime = timeNow();
    //    const currentDate = dateNow();
    //    const tomorrowDate = tomorrow();
-   //    const userRef = useRef();
+   //   const userRef = useRef();
 
    //    const [customerName, setCustomerName] = useState();
    //    const [methodCal, setMethodCal] = useState("hours");
@@ -131,19 +131,28 @@ export default function Hours(props) {
 
    console.log(props);
 
+   const handleSave = () => {};
+   const handleCheckOut = () => {};
+
    return (
       <Modal
-         title="Tính tiền"
+         title={"Thanh toán " + props.roomNumber}
          setOpen={props.setOpen}
          body={
             <>
-               <p>Xin chào</p>
+               <label>
+                  Tên khách hàng:
+                  <input type="text" name="customerName" />
+               </label>
             </>
          }
          footer={
             <>
+               <button onClick={() => handleSave()} className="btn btn-submit">
+                  Lưu
+               </button>
                <button
-                  //   onClick={(e) => handleSubmit(e)}
+                  onClick={() => handleCheckOut()}
                   className="btn btn-submit"
                >
                   Thanh toán

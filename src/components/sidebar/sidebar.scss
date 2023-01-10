@@ -62,6 +62,12 @@ a {
    align-items: center;
 }
 
+.dropdown {
+   transition: all 1s;
+}
+.activeDrop {
+   transform: rotate(180deg);
+}
 .active {
    color: $btn--color;
 }
