@@ -122,6 +122,19 @@ function Sidebar() {
                   </li>
                </ul>
             </li>
+            <li className="item-link">
+               <NavLink
+                  to={`/bills`}
+                  className={({ isActive, isPending }) =>
+                     isActive ? "active" : isPending ? "pending" : ""
+                  }
+                  onClick={() => setOpen1(!open1)}
+               >
+                  <RxDashboard />
+                  Bills
+                  {open1 ? <IoIosArrowUp /> : <IoIosArrowDown />}
+               </NavLink>
+            </li>
          </ul>
       </div>
    );

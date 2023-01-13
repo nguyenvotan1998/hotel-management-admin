@@ -1,3 +1,4 @@
+import "./check-in.scss";
 import { useEffect, useState, useRef } from "react";
 import Modal from "../../modal/Modal";
 
@@ -34,36 +35,239 @@ function TimeForm(props) {
    return (
       <>
          <label>
-            Vào
-            <input
-               type="date"
-               value={props.dateIn}
-               name="dateCheckIn"
-               onChange={props.eventDateIn}
-            />
-            <input
-               type="time"
-               value={props.hourIn}
-               name="hoursCheckIn"
-               onChange={props.eventHourIn}
-            />
+            Vào:
+            <div>
+               <input
+                  type="date"
+                  name="dateIn"
+                  value={props.dateIn}
+                  onChange={props.event}
+               />
+               <input
+                  type="time"
+                  name="hourIn"
+                  value={props.hourIn}
+                  onChange={props.event}
+               />
+            </div>
          </label>
          <label>
             Ra:
-            <input
-               type="date"
-               value={props.dateOut}
-               name="dateCheckOut"
-               onChange={props.eventDateOut}
-            />
-            <input
-               type="time"
-               value={props.hourOut}
-               name="hoursCheckOut"
-               onChange={props.eventHourOut}
-            />
+            <div>
+               <input
+                  type="date"
+                  name="dateOut"
+                  value={props.dateOut}
+                  onChange={props.event}
+               />
+               <input
+                  type="time"
+                  name="hourOut"
+                  value={props.hourOut}
+                  onChange={props.event}
+               />
+            </div>
          </label>
       </>
+   );
+}
+
+function RoomInfo(props) {
+   return (
+      <div className="container-cus-info">
+         <span>Thông tin phòng</span>
+         <div className="customer-info">
+            <div className="input method">
+               <label>
+                  Đặt phòng
+                  <input
+                     id="book"
+                     type="radio"
+                     name="method"
+                     value="book"
+                     onChange={props.updateRoomInfo}
+                  />
+               </label>
+               <label>
+                  Tính ngày
+                  <input
+                     id="days"
+                     type="radio"
+                     name="method"
+                     value="days"
+                     onChange={props.updateRoomInfo}
+                  />
+               </label>
+               <label>
+                  Tính giờ
+                  <input
+                     id="hours"
+                     type="radio"
+                     name="method"
+                     value="hours"
+                     defaultChecked
+                     onChange={props.updateRoomInfo}
+                  />
+               </label>
+            </div>
+            <div className="input date time">
+               {props.roomInfo.method == "book" ? (
+                  <TimeForm
+                     dateIn={props.roomInfo.dateIn}
+                     dateOut={props.roomInfo.dateOut}
+                     hourIn={props.roomInfo.hourIn}
+                     hourOut={props.roomInfo.hourOut}
+                     event={props.updateRoomInfo}
+                  />
+               ) : props.roomInfo.method == "days" ? (
+                  <TimeForm
+                     dateIn={props.roomInfo.dateIn}
+                     dateOut={props.roomInfo.dateOut}
+                     hourIn={props.roomInfo.hourIn}
+                     hourOut={props.roomInfo.hourOut}
+                     event={props.updateRoomInfo}
+                  />
+               ) : props.roomInfo.method == "hours" ? (
+                  <TimeForm
+                     dateIn={props.roomInfo.dateIn}
+                     dateOut={props.roomInfo.dateOut}
+                     hourIn={props.roomInfo.hourIn}
+                     hourOut=""
+                     event={props.updateRoomInfo}
+                  />
+               ) : null}
+            </div>
+            <label>
+               Phòng:
+               <p>{props.room}</p>
+            </label>
+            <label>
+               Trả trước:
+               <input
+                  type="text"
+                  className="input room-info"
+                  name="prepay"
+                  value={props.roomInfo.prepay}
+                  onChange={props.updateRoomInfo}
+               />
+            </label>
+            {props.roomInfo.prepay ? (
+               props.roomInfo.payment === "" ? (
+                  props.updatePayment && (
+                     <label>
+                        Hình thức:
+                        <select
+                           className="input room-info"
+                           name="payment"
+                           value={props.roomInfo.payment}
+                           onChange={props.updateRoomInfo}
+                        >
+                           <option value="cash">Tiền mặt</option>
+                           <option value="tranfer">Chuyển khoản</option>
+                        </select>
+                     </label>
+                  )
+               ) : (
+                  <label>
+                     Hình thức:
+                     <select
+                        className="input room-info"
+                        name="payment"
+                        value={props.roomInfo.payment}
+                        onChange={props.updateRoomInfo}
+                     >
+                        <option value="cash">Tiền mặt</option>
+                        <option value="tranfer">Chuyển khoản</option>
+                     </select>
+                  </label>
+               )
+            ) : null}
+            <label>
+               Ghi chú:
+               <input
+                  type="textarea"
+                  className="input room-info"
+                  name="note"
+                  value={props.roomInfo.note}
+                  onChange={props.updateRoomInfo}
+               />
+            </label>
+         </div>
+      </div>
+   );
+}
+
+function CustomerInfo(props) {
+   return (
+      <div className="container-cus-info">
+         <span>Thông tin khách hàng</span>
+         <div className="customer-info">
+            <input
+               id="cusName"
+               type="text"
+               name="name"
+               placeholder="Tên khách hàng"
+               ref={props.userRef}
+               value={props.cusInfo.name}
+               onChange={props.updateCusInfo}
+            />
+            <input
+               id="cusCard"
+               type="text"
+               name="card"
+               placeholder="CMND/CCCD"
+               value={props.cusInfo.card}
+               onChange={props.updateCusInfo}
+            />
+            <input
+               id="cusPhone"
+               type="text"
+               name="phone"
+               placeholder="Số điện thoại"
+               value={props.cusInfo.phone}
+               onChange={props.updateCusInfo}
+            />
+            <input
+               type="text"
+               name="address"
+               placeholder="Địa chỉ"
+               value={props.cusInfo.address}
+               onChange={props.updateCusInfo}
+            />
+
+            <div>
+               <div>
+                  <label>
+                     Nam
+                     <input
+                        id="book"
+                        value="Male"
+                        name="sex"
+                        type="radio"
+                        defaultChecked
+                        onChange={props.updateCusInfo}
+                     />
+                  </label>
+                  <label>
+                     Nữ
+                     <input
+                        id="hours"
+                        value="Female"
+                        name="sex"
+                        type="radio"
+                        onChange={props.updateCusInfo}
+                     />
+                  </label>
+               </div>
+               <input
+                  type="date"
+                  name="birthday"
+                  value={props.cusInfo.birthday}
+                  onChange={props.updateCusInfo}
+               />
+            </div>
+         </div>
+      </div>
    );
 }
 
@@ -73,192 +277,117 @@ export default function FormCheckIn(props) {
    const tomorrowDate = tomorrow();
    const userRef = useRef();
 
-   const [customerName, setCustomerName] = useState();
-   const [methodCal, setMethodCal] = useState("hours");
-   const [dateCheckIn, setDateCheckIn] = useState(currentDate);
-   const [dateCheckOut, setDateCheckOut] = useState();
-   const [hoursCheckIn, setHoursCheckIn] = useState();
-   const [hoursCheckOut, setHoursCheckOut] = useState();
+   const [roomInfo, setRoomInfo] = useState({
+      method: "hours",
+      dateIn: "",
+      hourIn: "",
+      dateOut: "",
+      hourOut: "",
+      room: props.status.room,
+      prepay: "",
+      payment: "",
+      note: "",
+   });
+
+   const [cusInfo, setCusInfo] = useState({
+      name: "",
+      card: "",
+      phone: "",
+      address: "",
+      sex: "Male",
+      birthday: "",
+   });
 
    useEffect(() => {
       userRef.current.focus();
-      switch (methodCal) {
+      switch (roomInfo.method) {
          case "hours":
-            setHoursCheckIn(currentTime);
-            setDateCheckOut(currentDate);
+            setRoomInfo((prev) => ({
+               ...prev,
+               dateIn: currentDate,
+               dateOut: currentDate,
+               hourIn: currentTime,
+            }));
             break;
          case "days":
-            setDateCheckOut(tomorrowDate);
-            setHoursCheckIn(currentTime);
-            setHoursCheckOut("12:00");
+            setRoomInfo((prev) => ({
+               ...prev,
+               dateIn: currentDate,
+               dateOut: tomorrowDate,
+               hourIn: currentTime,
+               hourOut: "12:00",
+            }));
+
             break;
          case "book":
-            setDateCheckOut(tomorrowDate);
-            setHoursCheckIn("12:00");
-            setHoursCheckOut("12:00");
+            setRoomInfo((prev) => ({
+               ...prev,
+               dateIn: currentDate,
+               dateOut: tomorrowDate,
+               hourIn: "12:00",
+               hourOut: "12:00",
+            }));
             break;
       }
-   }, [methodCal]);
+   }, [roomInfo.method]);
 
    const handleSubmit = (e) => {
       e.preventDefault();
-      var i;
-      props.status.map((res) => {
-         if (res.room === props.roomNumber) {
-            i = res.id;
-         }
-      });
-      fetch(`http://localhost:8000/room-status/${i}`, {
-         method: "PATCH",
-         headers: { "Content-Type": "application/json" },
-         body: JSON.stringify({
-            status: methodCal,
-            customer: customerName,
-            hoursCheckIn: hoursCheckIn,
+      Promise.all([
+         fetch(`http://localhost:8000/room-status/${props.status.id}`, {
+            method: "PATCH",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+               ...roomInfo,
+               status: "using",
+               customer: cusInfo.name,
+            }),
          }),
-      })
-         .then((response) => response.json())
-         .then((json) => console.log(json));
+         fetch("http://localhost:8000/customers", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(cusInfo),
+         }),
+      ]);
       window.location.reload();
    };
 
-   const handleChange = (e) => {
-      setCustomerName(e.target.value);
+   const updateCusInfo = (e) => {
+      setCusInfo((prev) => ({ ...prev, [e.target.name]: e.target.value }));
    };
 
-   console.log(props);
+   const updateRoomInfo = (e) => {
+      setRoomInfo((prev) => ({ ...prev, [e.target.name]: e.target.value }));
+   };
+   const updatePayment = () => {
+      setRoomInfo((prev) => ({ ...prev, payment: "cash" }));
+   };
 
+   console.log(roomInfo);
    return (
       <Modal
          title="Nhận phòng"
          setOpen={props.setOpen}
          body={
             <>
-               <label>
-                  Tên khách hàng:
-                  <input
-                     ref={userRef}
-                     type="text"
-                     name="customerName"
-                     onChange={(e) => setCustomerName(e.target.value)}
-                  />
-               </label>
+               <CustomerInfo
+                  userRef={userRef}
+                  cusInfo={cusInfo}
+                  updateCusInfo={updateCusInfo}
+               />
 
-               <div className="input radio">
-                  <label>
-                     Đặt phòng
-                     <input
-                        id="book"
-                        value="book"
-                        name="platform"
-                        type="radio"
-                        onChange={(e) => setMethodCal(e.target.value)}
-                     />
-                  </label>
-                  <label>
-                     Tính ngày
-                     <input
-                        id="days"
-                        value="days"
-                        name="platform"
-                        type="radio"
-                        onChange={(e) => setMethodCal(e.target.value)}
-                     />
-                  </label>
-                  <label>
-                     Tính giờ
-                     <input
-                        id="hours"
-                        value="hours"
-                        name="platform"
-                        type="radio"
-                        defaultChecked
-                        onChange={(e) => setMethodCal(e.target.value)}
-                     />
-                  </label>
-               </div>
-
-               <div className="input date time">
-                  {methodCal == "book" ? (
-                     <TimeForm
-                        dateIn={dateCheckIn}
-                        dateOut={dateCheckOut}
-                        hourIn={hoursCheckIn}
-                        hourOut={hoursCheckOut}
-                        eventDateIn={(e) => setDateCheckIn(e.target.value)}
-                        eventDateOut={(e) => setDateCheckOut(e.target.value)}
-                        eventHourIn={(e) => setHoursCheckIn(e.target.value)}
-                        eventHourOut={(e) => setHoursCheckOut(e.target.value)}
-                     />
-                  ) : methodCal == "days" ? (
-                     <TimeForm
-                        dateIn={dateCheckIn}
-                        dateOut={dateCheckOut}
-                        hourIn={hoursCheckIn}
-                        hourOut={hoursCheckOut}
-                        eventDateIn={(e) => setDateCheckIn(e.target.value)}
-                        eventDateOut={(e) => setDateCheckOut(e.target.value)}
-                        eventHourIn={(e) => setHoursCheckIn(e.target.value)}
-                        eventHourOut={(e) => setHoursCheckOut(e.target.value)}
-                     />
-                  ) : methodCal == "hours" ? (
-                     <TimeForm
-                        dateIn={dateCheckIn}
-                        dateOut={dateCheckOut}
-                        hourIn={hoursCheckIn}
-                        eventDateIn={(e) => setDateCheckIn(e.target.value)}
-                        eventDateOut={(e) => setDateCheckOut(e.target.value)}
-                        eventHourIn={(e) => setHoursCheckIn(e.target.value)}
-                        eventHourOut={(e) => setHoursCheckOut(e.target.value)}
-                     />
-                  ) : (
-                     <></>
-                  )}
-               </div>
-
-               <label>
-                  Phòng:
-                  <select
-                     value={props.roomNumber}
-                     onChange={(e) => setCustomerName(e.target.value)}
-                  >
-                     {props.rooms?.map((data) => (
-                        <option key={data.id} value={data.roomName}>
-                           {data.roomName}
-                        </option>
-                     ))}
-                  </select>
-               </label>
-               <label>
-                  Trả trước:
-                  <input type="text" name="floorName" onChange={handleChange} />
-               </label>
-               <label>
-                  Hình thức:
-                  <select
-                     value={props.roomNumber}
-                     onChange={(e) => setCustomerName(e.target.value)}
-                  >
-                     <option value="cash">Tiền mặt</option>
-                     <option value="tranfer">Chuyển khoản</option>
-                  </select>
-               </label>
-               <label>
-                  Ghi chú:
-                  <input
-                     type="textarea"
-                     name="floorName"
-                     onChange={handleChange}
-                  />
-               </label>
+               <RoomInfo
+                  room={props.status.room}
+                  roomInfo={roomInfo}
+                  setRoomInfo={setRoomInfo}
+                  updatePayment={updatePayment}
+                  updateRoomInfo={updateRoomInfo}
+               />
             </>
          }
          footer={
             <>
-               <button
-                  onClick={(e) => handleSubmit(e)}
-                  className="btn btn-submit"
-               >
+               <button onClick={handleSubmit} className="btn btn-submit">
                   Thực hiện
                </button>
             </>

@@ -1,8 +1,17 @@
 @import "../../App.scss";
 
+@keyframes slide {
+   from {
+      width: 200px;
+   }
+   to {
+      width: 0px;
+   }
+}
 .sidebar {
    width: 200px;
    border-right: 1px solid rgb(213, 213, 213);
+   // transition: all 1s linear;
    // TODO: Logo of Sidebar
    &__logo {
       height: 60px;

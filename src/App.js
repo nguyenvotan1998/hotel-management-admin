@@ -9,6 +9,7 @@ import Revenue from "./pages/customers/revenue/Revenue";
 import Blacklist from "./pages/customers/blacklist/Blacklist";
 import Birthday from "./pages/customers/birthday/Birthday";
 import RoomPrices from "./pages/room/prices/RoomPrices";
+import BillPage from "./pages/bill/BillPage";
 
 function Main() {
    return (
@@ -19,11 +20,10 @@ function Main() {
             <Route path="/rooms/room-information" element={<RoomPage />} />
             <Route path="/rooms/room-prices" element={<RoomPrices />} />
             <Route path="/customers/revenue" element={<Revenue />} />
-            <Route path="/customers" element={<CustomerPage />}>
-               {/* <Route path="/customers/promotion" element={<Home />} /> */}
-            </Route>
+            <Route path="/customers" element={<CustomerPage />} />
             <Route path="/customers/blacklist" element={<Blacklist />} />
             <Route path="/customers/birthday" element={<Birthday />} />
+            <Route path="/bills" element={<BillPage />} />
          </Routes>
       </div>
    );

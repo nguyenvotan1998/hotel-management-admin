@@ -31,6 +31,23 @@ function tomorrow() {
    return y + "-" + mm + "-" + dd;
 }
 
+function subTime(hourIn, hourOut) {
+   const arrayIn = hourIn.split(":");
+   const arrayOut = hourOut.split(":");
+   let totalHour, totalMinute;
+   if (arrayOut[1] >= arrayIn[1]) {
+      totalHour = arrayOut[0] - arrayIn[0];
+      totalMinute = arrayOut[1] - arrayIn[1];
+   } else {
+      totalHour = arrayOut[0] - arrayIn[0] - 1;
+      totalMinute = Number(60 - arrayIn[1]) + Number(arrayOut[1]);
+   }
+   if (totalHour < 10) {
+      totalHour = String("0") + totalHour;
+   }
+   return totalHour + ":" + totalMinute;
+}
+
 function TimeForm(props) {
    return (
       <>
@@ -69,7 +86,7 @@ function TimeForm(props) {
 }
 
 export default function Hours(props) {
-   //    const currentTime = timeNow();
+   const currentTime = timeNow();
    //    const currentDate = dateNow();
    //    const tomorrowDate = tomorrow();
    //   const userRef = useRef();
@@ -129,7 +146,11 @@ export default function Hours(props) {
    //       setCustomerName(e.target.value);
    //    };
 
+   const totalTime = subTime(props.hourIn, currentTime);
+
    console.log(props);
+   console.log(totalTime);
+   console.log(currentTime);
 
    const handleSave = () => {};
    const handleCheckOut = () => {};
@@ -140,10 +161,22 @@ export default function Hours(props) {
          setOpen={props.setOpen}
          body={
             <>
-               <label>
-                  Tên khách hàng:
-                  <input type="text" name="customerName" />
-               </label>
+               <div>
+                  <p>Tên khách hàng:</p>
+                  <p>{props.customerName}</p>
+               </div>
+               <div>
+                  <p>Giờ vào:</p>
+                  <p>{props.hourIn}</p>
+               </div>
+               <div>
+                  <p>Giờ ra:</p>
+                  <p>{currentTime}</p>
+               </div>
+               <div>
+                  <p>Tổng giờ:</p>
+                  <p>{totalTime}</p>
+               </div>
             </>
          }
          footer={

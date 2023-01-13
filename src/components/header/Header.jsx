@@ -20,7 +20,7 @@ function Header() {
                <FiMessageSquare className="icon" />
                <span className="number">2</span>
             </div>
-            <div className="header__profile"></div>
+            <div className="header__profile">TN</div>
          </div>
       </div>
    );

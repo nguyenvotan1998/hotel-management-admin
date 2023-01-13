@@ -43,15 +43,6 @@ $bg-page--color: #fff8d8;
    cursor: pointer;
 }
 
-.btn-add {
-}
-
-.btn-edit {
-}
-
-.btn-delete {
-}
-
 .icon {
    cursor: pointer;
 }
@@ -79,16 +70,17 @@ table {
 }
 
 label {
-   margin: 10px 0;
+   // display: block;
+   // margin: 10px 0;
    display: flex;
    justify-content: space-between;
    align-items: center;
    color: black;
 }
 
-label > input {
-   margin-left: 20px;
-}
+// label > input {
+//    margin-left: 20px;
+// }
 
 input,
 select {
@@ -107,4 +99,19 @@ select {
 }
 .radio > :not(:first-child) {
    margin-left: 30px;
+}
+
+// .input.date.time {
+//    display: flex;
+//    flex-direction: column;
+// }
+
+@media only screen and (max-width: 1265px) {
+   .sidebar {
+      display: none;
+   }
+   .room-status-container {
+      display: flex;
+      flex-wrap: wrap;
+   }
 }

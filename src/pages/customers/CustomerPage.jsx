@@ -1,5 +1,5 @@
-import { useState, useContext } from "react";
-import { Outlet } from "react-router-dom";
+import "./customer-page.scss";
+import { useState } from "react";
 import Container from "../../components/container/Container";
 import CustomerList from "../../components/list/CustomerList";
 import Modal from "../../components/modal/Modal";
@@ -15,7 +15,11 @@ export default function CustomerPage() {
             isButton={true}
             button={
                <>
-                  <button className="btn btn-add" onClick={() => setOpen(true)}>
+                  <button
+                     style={{ marginBottom: "10px" }}
+                     className="btn btn-add"
+                     onClick={() => setOpen(true)}
+                  >
                      Thêm
                   </button>
                   {open && (

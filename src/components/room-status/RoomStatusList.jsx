@@ -1,9 +1,12 @@
 import "./room-status-list.scss";
 import { useState, useEffect, useRef } from "react";
-
 import useFetch from "../hooks/useFetch";
 import RoomStatus from "../room-status/RoomStatus";
-import { Fragment } from "react";
+
+function formatDate(value) {
+   const array = value.split("-");
+   return array[2] + "/" + array[1];
+}
 
 export default function RoomStatusList() {
    const [floors, setFloors] = useState();
@@ -33,48 +36,36 @@ export default function RoomStatusList() {
          {floors?.map((f) => (
             <div key={f.id} className="floor">
                <h2>{f.name}</h2>
-               <div key={f.id} className="room-status-container">
-                  {rooms?.map(
-                     (r) =>
-                        f.name === r.floor ? (
-                           status?.map((s) =>
-                              r.roomName === s.room && s.status === "empty" ? (
-                                 <RoomStatus
-                                    key={r.id}
-                                    bg="white"
-                                    roomNumber={r.roomName}
-                                    rooms={rooms}
-                                    status={s.status}
-                                 />
-                              ) : r.roomName === s.room &&
-                                s.status === "hours" ? (
-                                 <RoomStatus
-                                    key={r.id}
-                                    bg="red"
-                                    rooms={rooms}
-                                    status={s.status}
-                                    roomNumber={r.roomName}
-                                    startDay={s.hoursCheckIn}
-                                    customerName={s.customer}
-                                 />
-                              ) : (
-                                 <Fragment key={s.room}></Fragment>
-                              )
-                           )
-                        ) : (
-                           <Fragment key={r.id}></Fragment>
-                        )
-                     // f.name === r.floor ? (
-                     //    <RoomStatus
-                     //       key={r.id}
-                     //       roomNumber={r.roomName}
-                     //       rooms={rooms}
-                     //       status={status}
-
-                     //    />
-                     // ) : (
-                     //    <Fragment key={r.id}></Fragment>
-                     // )
+               <div className="room-status-container">
+                  {rooms?.map((r) =>
+                     f.name === r.floor
+                        ? status?.map((s) =>
+                             r.roomName === s.room && s.status === "empty" ? (
+                                <RoomStatus key={r.id} bg="white" status={s} />
+                             ) : r.roomName === s.room &&
+                               s.status === "using" &&
+                               s.method === "hours" ? (
+                                <RoomStatus key={r.id} bg="red" status={s} />
+                             ) : r.roomName === s.room &&
+                               s.status === "using" &&
+                               s.method === "days" ? (
+                                <RoomStatus key={r.id} bg="orange" status={s} />
+                             ) : r.roomName === s.room &&
+                               s.status === "using" &&
+                               s.method === "book" ? (
+                                <RoomStatus
+                                   key={r.id}
+                                   bg="orange"
+                                   rooms={rooms}
+                                   status={s.status}
+                                   roomNumber={r.roomName}
+                                   startDay={s.hoursCheckIn}
+                                   // endDay={time}
+                                   customerName={s.customer}
+                                />
+                             ) : null
+                          )
+                        : null
                   )}
                </div>
             </div>
