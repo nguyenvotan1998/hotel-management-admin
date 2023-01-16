@@ -22,9 +22,12 @@ const menu = [
 ];
 
 function Sidebar() {
-   const [open1, setOpen1] = useState(false);
-   const [open2, setOpen2] = useState(false);
-   const [open3, setOpen3] = useState(false);
+   const [open, setOpen] = useState({
+      home: false,
+      room: false,
+      customer: false,
+      bill: false,
+   });
 
    return (
       <div className="sidebar">
@@ -39,11 +42,13 @@ function Sidebar() {
                   className={({ isActive, isPending }) =>
                      isActive ? "active" : isPending ? "pending" : ""
                   }
-                  onClick={() => setOpen1(!open1)}
+                  onClick={() =>
+                     setOpen((prev) => ({ ...prev, home: !open.home }))
+                  }
                >
                   <RxDashboard />
                   Home
-                  {open1 ? <IoIosArrowUp /> : <IoIosArrowDown />}
+                  {open.home ? <IoIosArrowUp /> : <IoIosArrowDown />}
                </NavLink>
             </li>
             <li className="item-link">
@@ -52,23 +57,17 @@ function Sidebar() {
                   className={({ isActive, isPending }) =>
                      isActive ? "active" : isPending ? "pending" : ""
                   }
-                  onClick={() => setOpen2(!open2)}
+                  onClick={() =>
+                     setOpen((prev) => ({ ...prev, room: !open.room }))
+                  }
                >
                   <BiBed />
                   Room
-                  {/* {open2 ? (
-                     <IoIosArrowUp class="up" />
-                  ) : ( */}
-                  <IoIosArrowDown
-                     className={(e) =>
-                        open2 ? "dropdown activeDrop" : "dropdown"
-                     }
-                  />
-                  {/* )} */}
+                  {open.room ? <IoIosArrowUp /> : <IoIosArrowDown />}
                </NavLink>
                <ul
                   className={
-                     open2 ? "sub-menu-lv2 open" : "sub-menu-lv2 hidden"
+                     open.room ? "sub-menu-lv2 open" : "sub-menu-lv2 hidden"
                   }
                >
                   <li>
@@ -85,40 +84,36 @@ function Sidebar() {
                <NavLink
                   to={`/customers`}
                   className={({ isActive, isPending }) =>
-                     isActive ? "active" : isPending ? "pending" : ""
+                     isActive ? "active" : isPending ? "pending" : null
                   }
-                  onClick={() => setOpen3(!open3)}
+                  onClick={() =>
+                     setOpen((prev) => ({ ...prev, customer: !open.customer }))
+                  }
                   // className={active(isActive, isPending)}
                >
                   <FiUsers />
                   Customer
-                  {open3 ? <IoIosArrowUp /> : <IoIosArrowDown />}
+                  {open.customer ? <IoIosArrowUp /> : <IoIosArrowDown />}
                </NavLink>
                <ul
                   className={
-                     open3 ? "sub-menu-lv2 open" : "sub-menu-lv2 hidden"
+                     open.customer ? "sub-menu-lv2 open" : "sub-menu-lv2 hidden"
                   }
                >
                   <li>
-                     <NavLink to={`/customers/`}>List of customers</NavLink>
+                     <NavLink to={`/customers/`}>List</NavLink>
                   </li>
                   <li>
-                     <NavLink to={`/customers/revenue`}>
-                        Revenue of customers
-                     </NavLink>
+                     <NavLink to={`/customers/revenue`}>Revenue</NavLink>
                   </li>
                   <li>
                      <NavLink to={`/customers/blacklist`}>Blacklist</NavLink>
                   </li>
                   <li>
-                     <NavLink to={`/customers/promotion`}>
-                        Promotion for customers
-                     </NavLink>
+                     <NavLink to={`/customers/promotion`}>Promotion</NavLink>
                   </li>
                   <li>
-                     <NavLink to={`/customers/birthday`}>
-                        Birthday of customers
-                     </NavLink>
+                     <NavLink to={`/customers/birthday`}>Birthday</NavLink>
                   </li>
                </ul>
             </li>
@@ -128,11 +123,13 @@ function Sidebar() {
                   className={({ isActive, isPending }) =>
                      isActive ? "active" : isPending ? "pending" : ""
                   }
-                  onClick={() => setOpen1(!open1)}
+                  onClick={() =>
+                     setOpen((prev) => ({ ...prev, bill: !open.bill }))
+                  }
                >
                   <RxDashboard />
-                  Bills
-                  {open1 ? <IoIosArrowUp /> : <IoIosArrowDown />}
+                  Bill
+                  {open.bill ? <IoIosArrowUp /> : <IoIosArrowDown />}
                </NavLink>
             </li>
          </ul>

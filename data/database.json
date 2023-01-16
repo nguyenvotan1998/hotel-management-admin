@@ -105,15 +105,6 @@
       "id": 2
     },
     {
-      "name": "nguyên thị minh hang",
-      "card": "232",
-      "phone": "23123",
-      "address": "123123",
-      "sex": "Male",
-      "birthday": "2023-01-13",
-      "id": 3
-    },
-    {
       "name": "Đoàn Chí Linh",
       "card": "340128300",
       "phone": "0947382239",
@@ -139,41 +130,80 @@
       "sex": "Male",
       "birthday": "2022-12-28",
       "id": 6
+    },
+    {
+      "name": "Đỗ Đan Trường",
+      "card": "261466950",
+      "phone": "0976574875",
+      "address": "Huy Khiêm, Tánh Linh, Bình Thuận",
+      "sex": "Male",
+      "birthday": "1996-06-05",
+      "id": 7
+    },
+    {
+      "name": "Nguyễn Thị Ngọc Giàu",
+      "card": "312362988",
+      "phone": "0927573912",
+      "address": "Hiệp Phú, Hiệp Đức, Cai Lậy, Tiền Giang",
+      "sex": "Female",
+      "birthday": "1998-03-06",
+      "id": 8
+    },
+    {
+      "name": "Bùi Thị Ngọc Sương",
+      "card": "060182007639",
+      "phone": "0938290209",
+      "address": "Tổ 1, Khu Phố 2, Phú Trinh, Phan Thiết, Bình Thuận",
+      "sex": "Female",
+      "birthday": "1982-04-04",
+      "id": 9
+    },
+    {
+      "name": "Bùi Thị Ngọc Sương",
+      "card": "060182007639",
+      "phone": "0987548209",
+      "address": "Tổ 1, Khu Phố 2, Phú Trinh, Phan Thiết, Bình Thuận",
+      "sex": "Female",
+      "birthday": "1998-03-07",
+      "id": 10
     }
   ],
   "room-status": [
     {
       "room": "101",
-      "status": "empty",
-      "id": 1
-    },
-    {
-      "room": "102",
       "status": "using",
-      "id": 2,
+      "id": 1,
       "method": "hours",
-      "dateIn": "2023-01-13",
-      "hourIn": "16:33",
-      "dateOut": "2023-01-13",
+      "dateIn": "2023-01-15",
+      "hourIn": "21:05",
+      "dateOut": "2023-01-15",
       "hourOut": "",
       "prepay": "",
       "payment": "",
       "note": "",
-      "customer": "Lê Thị Ái Ân"
+      "customer": "Bùi Thị Ngọc Sương",
+      "services": [
+        {
+          "name": "Nước suối",
+          "number": 5,
+          "price": 60000
+        },
+        {
+          "name": "Nước ngọt",
+          "number": "2",
+          "price": 30000
+        }
+      ]
+    },
+    {
+      "room": "102",
+      "status": "empty",
+      "id": 2
     },
     {
       "room": "103",
-      "status": "using",
-      "id": 3,
-      "method": "days",
-      "dateIn": "2023-01-13",
-      "hourIn": "00:16",
-      "dateOut": "2023-01-13",
-      "hourOut": "12:00",
-      "prepay": "400000",
-      "payment": "cash",
-      "note": "Lưu ý khách này",
-      "customer": "Lê Thị Hậu"
+      "status": "empty",
+      "id": 3
     },
     {
       "room": "201",
@@ -213,6 +243,19 @@
       "early": "40000",
       "late": "40000",
       "id": 3
+    }
+  ],
+  "bills": [],
+  "services": [
+    {
+      "id": 1,
+      "name": "Nước ngọt",
+      "price": 15000
+    },
+    {
+      "id": 2,
+      "name": "Nước suối",
+      "price": 10000
     }
   ]
 }

@@ -5,7 +5,7 @@ import AddFloor from "../form/add/AddFloor";
 import { BsTrash } from "react-icons/bs";
 import { BsPencil } from "react-icons/bs";
 export default function BillList(props) {
-   const { data, loading, error } = useFetch("http://localhost:8000/floors");
+   const { data, loading, error } = useFetch("http://localhost:8000/bills");
 
    const [openForm, setOpenForm] = useState(false);
 
@@ -15,23 +15,25 @@ export default function BillList(props) {
             <td>{res.id}</td>
             <td>{res.name}</td>
             <td>
-               <BsPencil className="icon icon__edit" />
+               <BsPencil className="icon icon__edit" onClick={viewDetail} />
             </td>
             <td>
                <BsTrash
                   className="icon icon__delete"
-                  onClick={() => deleteFloor(res.id)}
+                  onClick={() => printBill(res.id)}
                />
             </td>
          </tr>
       ));
 
-   function deleteFloor(id) {
+   const viewDetail = () => {};
+
+   const printBill = (id) => {
       fetch(`http://localhost:8000/floors/${id}`, {
          method: "delete",
       });
       window.location.reload(false);
-   }
+   };
 
    return (
       <div className="list">
@@ -46,9 +48,13 @@ export default function BillList(props) {
             <thead>
                <tr>
                   <th>Id</th>
-                  <th>Name</th>
-                  <th>Edit</th>
-                  <th>Delete</th>
+                  <th>Room</th>
+                  <th>Customer</th>
+                  <th>Date</th>
+                  <th>Total</th>
+                  <th>Cashier</th>
+                  <th>View Details</th>
+                  <th>Print Bill</th>
                </tr>
             </thead>
             <tbody>

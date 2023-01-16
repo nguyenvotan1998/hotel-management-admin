@@ -1,8 +1,9 @@
 @import "../../App.scss";
 
 .container {
-   border: 3px double $border-container--color;
    background-color: #fff;
+   border-radius: 3px;
+   overflow: hidden;
    box-shadow: rgba(17, 12, 46, 0.15) 0px 48px 100px 0px;
    &__header {
       color: #fff;

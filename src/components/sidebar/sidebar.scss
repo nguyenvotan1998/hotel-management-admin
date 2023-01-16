@@ -11,7 +11,6 @@
 .sidebar {
    width: 200px;
    border-right: 1px solid rgb(213, 213, 213);
-   // transition: all 1s linear;
    // TODO: Logo of Sidebar
    &__logo {
       height: 60px;
@@ -42,22 +41,21 @@
    }
 
    &__list-link {
-      padding: 10px 20px;
+      padding-left: 10px;
       font-size: 20px;
-
       .item-link {
+         margin-top: 10px;
          a {
             display: flex;
-            justify-content: space-between;
+            gap: 10px;
+         }
+         > ul {
+            padding-left: 30px;
+            > li {
+               margin-top: 10px;
+            }
          }
       }
-
-      .item-link:not(:first-child) {
-         margin-top: 10px;
-      }
-      a::nth-chi2ld() {
-      }
-      // margin-right: 20px;
    }
 }
 ul {

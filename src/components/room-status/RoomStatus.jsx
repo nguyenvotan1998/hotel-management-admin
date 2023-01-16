@@ -6,27 +6,7 @@ import { BsDash } from "react-icons/bs";
 import { BsCheck2Circle } from "react-icons/bs";
 import RoomSettingList from "../setting/room-settings/RoomSettingList";
 import FormCheckIn from "../form/check-in/CheckIn";
-import Hours from "../form/check-out/Hours";
-import Days from "../form/check-out/Days";
-function Clock() {
-   const [time, setTime] = useState();
-
-   useEffect(() => {
-      setInterval(() => {
-         const dateObject = new Date();
-
-         const hour = dateObject.getHours();
-         const minute = dateObject.getMinutes();
-         const second = dateObject.getSeconds();
-
-         const currentTime = hour + " : " + minute + " : " + second;
-
-         setTime(currentTime);
-      }, 1000);
-   }, []);
-
-   return { time };
-}
+import CheckOut from "../form/check-out/CheckOut";
 
 function formatDate(value) {
    const array = value.split("-");
@@ -45,7 +25,6 @@ function RoomStatus(props) {
    return (
       <div
          className="room-status"
-         //fix error display background-color
          style={{ backgroundColor: `${props.bg}` }}
          onClick={() => setOpenForm(true)}
       >
@@ -53,28 +32,9 @@ function RoomStatus(props) {
             ? openForm && (
                  <FormCheckIn setOpen={setOpenForm} status={props.status} />
               )
-            : props.status === "using" && props.method === "hours"
+            : props.status.status === "using"
             ? openForm && (
-                 <Hours
-                    setOpen={setOpenForm}
-                    roomNumber={props.roomNumber}
-                    rooms={props.rooms}
-                    customerName={props.customerName}
-                    hourIn={props.startDay}
-                    status={props.status}
-                 />
-              )
-            : props.status.status === "using" && props.status.method === "days"
-            ? openForm && (
-                 <Days
-                    setOpen={setOpenForm}
-                    roomNumber={props.roomNumber}
-                    rooms={props.rooms}
-                    customerName={props.customerName}
-                    dateIn={props.startDay}
-                    hourIn={props.hourIn}
-                    status={props.status}
-                 />
+                 <CheckOut setOpen={setOpenForm} status={props.status} />
               )
             : null}
          <div className="room-status__header">
@@ -90,7 +50,7 @@ function RoomStatus(props) {
             ) : (
                <></>
             )}
-            {/* <div className="room-status__status-icons">{props.statusIcon}</div> */}
+            <div className="room-status__status-icons">{props.statusIcon}</div>
             <div className="room-status__time-stay">
                {props.status.status === "empty" ? null : (
                   <>

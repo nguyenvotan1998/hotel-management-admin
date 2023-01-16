@@ -26,6 +26,9 @@
          //  gap: 30px;
       }
    }
+   .sex {
+      margin-right: 20px;
+   }
 }
 .customer-info {
    .input.date.time {
@@ -48,4 +51,8 @@
       width: 220px;
       text-align: center;
    }
+}
+
+label > input[type="radio"] {
+   margin-left: 5px;
 }

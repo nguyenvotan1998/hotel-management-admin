@@ -24,8 +24,8 @@ export default function AddFloor(props) {
    return (
       <>
          <Modal
-            title="Thêm khách hàng"
-            setOpen={props.setOpenForm}
+            title="Thêm lầu"
+            setOpen={props.setOpen}
             body={
                <>
                   <label>

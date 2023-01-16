@@ -8,7 +8,6 @@ $bg-page--color: #fff8d8;
    width: 100%;
    min-height: 100vh;
    display: flex;
-   // background-color: red;
    .main {
       display: flex;
       flex-direction: column;
@@ -70,17 +69,11 @@ table {
 }
 
 label {
-   // display: block;
-   // margin: 10px 0;
    display: flex;
    justify-content: space-between;
    align-items: center;
    color: black;
 }
-
-// label > input {
-//    margin-left: 20px;
-// }
 
 input,
 select {
@@ -100,11 +93,6 @@ select {
 .radio > :not(:first-child) {
    margin-left: 30px;
 }
-
-// .input.date.time {
-//    display: flex;
-//    flex-direction: column;
-// }
 
 @media only screen and (max-width: 1265px) {
    .sidebar {

@@ -7,6 +7,19 @@ import RoomTypeList from "../../components/list/RoomTypeList";
 import RoomList from "../../components/list/RoomList";
 import BillList from "../../components/list/BillList";
 
+function Header(props) {
+   return (
+      <>
+         <input type="text" placeholder="Room" />
+         <input type="text" placeholder="Customer" />
+         <button className="btn" onClick={() => props.setOpen(true)}>
+            Tìm
+         </button>
+         {props.open && <AddRoom setOpen={props.setOpen} />}
+      </>
+   );
+}
+
 export default function BillPage() {
    const [open, setOpen] = useState(false);
 
@@ -14,14 +27,8 @@ export default function BillPage() {
       <div className="page">
          <Container
             title="Danh sách hóa đơn"
-            button={
-               <>
-                  <button className="btn" onClick={() => setOpen(true)}>
-                     Thêm phòng
-                  </button>
-                  {open && <AddRoom setOpen={setOpen} />}
-               </>
-            }
+            isButton={true}
+            button={<Header open={open} setOpen={setOpen} />}
             body={
                <>
                   <BillList />

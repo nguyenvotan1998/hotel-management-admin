@@ -237,7 +237,7 @@ function CustomerInfo(props) {
 
             <div>
                <div>
-                  <label>
+                  <label className="sex">
                      Nam
                      <input
                         id="book"
@@ -355,7 +355,6 @@ export default function FormCheckIn(props) {
    const updateCusInfo = (e) => {
       setCusInfo((prev) => ({ ...prev, [e.target.name]: e.target.value }));
    };
-
    const updateRoomInfo = (e) => {
       setRoomInfo((prev) => ({ ...prev, [e.target.name]: e.target.value }));
    };
@@ -363,7 +362,6 @@ export default function FormCheckIn(props) {
       setRoomInfo((prev) => ({ ...prev, payment: "cash" }));
    };
 
-   console.log(roomInfo);
    return (
       <Modal
          title="Nhận phòng"
