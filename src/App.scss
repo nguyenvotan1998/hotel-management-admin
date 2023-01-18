@@ -50,10 +50,8 @@ $bg-page--color: #fff8d8;
 table {
    width: 100%;
    border: 1px solid red;
+   border-spacing: 0;
    th {
-      border: 1px solid red;
-   }
-   tr {
       border: 1px solid red;
    }
    td {

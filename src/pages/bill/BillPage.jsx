@@ -1,5 +1,5 @@
+import "./bill-page.scss";
 import { useState } from "react";
-// import "./room-page.scss";
 import Container from "../../components/container/Container";
 import AddRoom from "../../components/form/add/AddRoom";
 import FloorList from "../../components/list/FloorList";
@@ -9,14 +9,15 @@ import BillList from "../../components/list/BillList";
 
 function Header(props) {
    return (
-      <>
-         <input type="text" placeholder="Room" />
-         <input type="text" placeholder="Customer" />
+      <div className="bill-page-header">
+         <input id="bill-id" type="text" placeholder="Id" />
+         <input id="bill-room" type="text" placeholder="Room" />
+         <input id="bill-customer" type="text" placeholder="Customer" />
          <button className="btn" onClick={() => props.setOpen(true)}>
             Tìm
          </button>
          {props.open && <AddRoom setOpen={props.setOpen} />}
-      </>
+      </div>
    );
 }
 

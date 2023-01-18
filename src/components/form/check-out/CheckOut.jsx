@@ -69,7 +69,7 @@ export default function CheckOut(props) {
 
    const initState = {
       service: { name: "Nước suối", number: 0, price: 0 },
-      services: [],
+      services: props.status.services ? props.status.services : [],
    };
 
    const SET_SERVICE = "set_service";
@@ -149,7 +149,6 @@ export default function CheckOut(props) {
    const [state, dispatch] = useReducer(reducer, initState);
    const { service, services } = state;
 
-   const prepayRef = useRef();
    const currentTime = timeNow();
    const currentDate = dateNow();
    const totalTime = subTime(props.status.hourIn, currentTime);
@@ -161,14 +160,11 @@ export default function CheckOut(props) {
    const roomPrice =
       Number(priceOfRoom?.price) +
       (roundTotalTime - 1) * Number(priceOfRoom?.late);
-   const newServices = [...state.services];
-   const servicePrice = newServices?.reduce((total, current) => {
+   const servicePrice = services?.reduce((total, current) => {
       return total + current.price;
    }, 0);
    const prepay = props.prepay ? props.prepay : 0;
    const totalPrice = roomPrice + servicePrice - prepay;
-
-   const updateBill = () => {};
 
    const handleSave = () => {
       const newService = [...state.services];
@@ -189,17 +185,51 @@ export default function CheckOut(props) {
          return [...total, current];
       }, []);
       console.log(mergeService);
-      // fetch(`http://localhost:8000/room-status/${props.status.id}`, {
-      //    method: "PATCH",
-      //    headers: { "Content-Type": "application/json" },
-      //    body: JSON.stringify({
-      //       ...props.status,
-      //       services: mergeService,
-      //    }),
-      // });
+      fetch(`http://localhost:8000/room-status/${props.status.id}`, {
+         method: "PATCH",
+         headers: { "Content-Type": "application/json" },
+         body: JSON.stringify({
+            ...props.status,
+            services: mergeService,
+         }),
+      });
+      window.location.reload(false);
    };
-
-   const handleCheckOut = () => {};
+   const handleCheckOut = () => {
+      const newBill = {
+         ...props.status,
+         hourOut: currentTime,
+         dateOut: currentDate,
+         totalHour: totalTime,
+         totalDate: totalDate,
+         roomPrice: roomPrice,
+         services: services,
+         servicePrice: servicePrice,
+         totalPrice: totalPrice,
+         dateBill: currentTime,
+      };
+      delete newBill.id;
+      delete newBill.status;
+      Promise.all([
+         fetch("http://localhost:8000/bills", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+               ...newBill,
+            }),
+         }),
+         fetch(`http://localhost:8000/room-status/${props.status.id}`, {
+            method: "PUT",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+               room: newBill.room,
+               status: "not clean",
+               id: props.status.id,
+            }),
+         }),
+      ]);
+      window.location.reload();
+   };
 
    return (
       <Modal
@@ -267,13 +297,11 @@ export default function CheckOut(props) {
                   />
                   <p className="service__price price">{servicePrice}</p>
                </div>
-
-               {state.services.map((res, index) => (
+               {services?.map((res, index) => (
                   <div key={index} className="service">
                      <p className="service__label"></p>
                      <p className="service__name">{res.name}</p>
                      <p className="service__number">{res.number}</p>
-
                      <BsTrash
                         className="service__btn delete"
                         name={index}

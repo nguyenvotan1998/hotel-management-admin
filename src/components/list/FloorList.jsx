@@ -63,19 +63,18 @@ function FloorList(props) {
    const { data, loading, error } = useFetch("http://localhost:8000/floors");
    const [openAdd, setOpenAdd] = useState(false);
    const [openEdit, setOpenEdit] = useState(false);
-   const [valueForEdit, setValueForEdit] = useState({
+
+   const [floorEdit, setFloorEdit] = useState({
       id: "",
       name: "",
    });
    const floorRef = useRef();
 
-   const getValue = (e) => {
-      const parent = e.target.parentNode;
-      const name = parent.previousElementSibling;
-      const id = name.previousElementSibling;
-      const floorName = name.innerHTML;
-      const floorId = id.innerHTML;
-      setValueForEdit((prev) => ({ ...prev, id: floorId, name: floorName }));
+   const handleEdit = (id) => {
+      const floorChoose = data?.find((current) =>
+         current.id === id ? current : null
+      );
+      setFloorEdit(floorChoose);
       setOpenEdit(true);
    };
 
@@ -85,7 +84,10 @@ function FloorList(props) {
             <td>{res.id}</td>
             <td>{res.name}</td>
             <td>
-               <BsPencil className="icon icon__edit" onClick={getValue} />
+               <BsPencil
+                  className="icon icon__edit"
+                  onClick={() => handleEdit(res.id)}
+               />
             </td>
             <td>
                <BsTrash
@@ -95,16 +97,18 @@ function FloorList(props) {
             </td>
          </tr>
       ));
+   const formRef = useRef();
 
    function deleteFloor(id) {
       fetch(`http://localhost:8000/floors/${id}`, {
          method: "delete",
       });
-      window.location.reload(false);
+      formRef.current.reset();
+      // window.location.reload(false);
    }
 
    return (
-      <div className="list">
+      <div ref={formRef} className="list">
          <div className="list__header">
             <h3 className="title list__title">Thông tin lầu</h3>
             <button className="btn btn-add" onClick={() => setOpenAdd(true)}>
@@ -115,8 +119,8 @@ function FloorList(props) {
                <EditFloor
                   setOpen={setOpenEdit}
                   floorRef={floorRef}
-                  id={valueForEdit.id}
-                  name={valueForEdit.name}
+                  id={floorEdit.id}
+                  name={floorEdit.name}
                />
             )}
          </div>

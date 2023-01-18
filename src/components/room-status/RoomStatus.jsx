@@ -21,12 +21,24 @@ function RoomStatus(props) {
       e.stopPropagation();
       setOpenSetting(!openSetting);
    };
+   const handleDbClick = () => {
+      fetch(`http://localhost:8000/room-status/${props.status.id}`, {
+         method: "PATCH",
+         headers: { "Content-Type": "application/json" },
+         body: JSON.stringify({
+            ...props.status,
+            status: "empty",
+         }),
+      });
+      window.location.reload();
+   };
 
    return (
       <div
          className="room-status"
          style={{ backgroundColor: `${props.bg}` }}
          onClick={() => setOpenForm(true)}
+         onDoubleClick={handleDbClick}
       >
          {props.status.status === "empty"
             ? openForm && (
@@ -50,13 +62,16 @@ function RoomStatus(props) {
             ) : (
                <></>
             )}
-            <div className="room-status__status-icons">{props.statusIcon}</div>
+            <div className="room-status__status-icons">{props.iconStatus}</div>
             <div className="room-status__time-stay">
-               {props.status.status === "empty" ? null : (
+               {props.status.status === "empty" ||
+               props.status.status === "notclean" ? null : (
                   <>
                      <div>
                         <div className="room-status__date-in">
-                           {formatDate(props.status.dateIn)}
+                           {props.status.dateIn
+                              ? formatDate(props.status.dateIn)
+                              : null}
                         </div>
                         <BsDash />
                         <div className="room-status__date-out">

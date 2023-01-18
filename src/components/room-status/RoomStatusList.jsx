@@ -2,6 +2,7 @@ import "./room-status-list.scss";
 import { useState, useEffect, useRef } from "react";
 import useFetch from "../hooks/useFetch";
 import RoomStatus from "../room-status/RoomStatus";
+import { GiBroom } from "react-icons/gi";
 
 function formatDate(value) {
    const array = value.split("-");
@@ -42,6 +43,13 @@ export default function RoomStatusList() {
                         ? status?.map((s) =>
                              r.roomName === s.room && s.status === "empty" ? (
                                 <RoomStatus key={r.id} bg="white" status={s} />
+                             ) : r.roomName === s.room &&
+                               s.status === "notclean" ? (
+                                <RoomStatus
+                                   key={r.id}
+                                   iconStatus={<GiBroom />}
+                                   status={s}
+                                />
                              ) : r.roomName === s.room &&
                                s.status === "using" &&
                                s.method === "hours" ? (

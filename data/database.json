@@ -166,34 +166,49 @@
       "sex": "Female",
       "birthday": "1998-03-07",
       "id": 10
+    },
+    {
+      "name": "Nguyễn Phước Anh",
+      "card": "051077010954",
+      "phone": "0938279109",
+      "address": "Số 1B Suối Lội, Tổ 2, Ấp 2, Phước Vĩnh An, Củ Chi, Hồ Chí Minh",
+      "sex": "Male",
+      "birthday": "1977-10-12",
+      "id": 11
+    },
+    {
+      "name": "",
+      "card": "",
+      "phone": "",
+      "address": "",
+      "sex": "Male",
+      "birthday": "",
+      "id": 12
+    },
+    {
+      "name": "Phan Văn Long",
+      "card": "046085009350",
+      "phone": "0987483900",
+      "address": "10.06 CC Greenfield, 686 XVNT, Phường 25, Bình Thạnh, Hồ Chí Minh",
+      "sex": "Male",
+      "birthday": "1985-12-30",
+      "id": 13
+    },
+    {
+      "name": "Võ Tấn Nguyên",
+      "card": "206204159",
+      "phone": "0968578108",
+      "address": "627 Xô Viết Nghệ Tĩnh, Phường 26, Quận Bình Thạnh",
+      "sex": "Male",
+      "birthday": "1998-08-17",
+      "id": 14
     }
   ],
   "room-status": [
     {
       "room": "101",
-      "status": "using",
-      "id": 1,
-      "method": "hours",
-      "dateIn": "2023-01-15",
-      "hourIn": "21:05",
-      "dateOut": "2023-01-15",
-      "hourOut": "",
-      "prepay": "",
-      "payment": "",
-      "note": "",
-      "customer": "Bùi Thị Ngọc Sương",
-      "services": [
-        {
-          "name": "Nước suối",
-          "number": 5,
-          "price": 60000
-        },
-        {
-          "name": "Nước ngọt",
-          "number": "2",
-          "price": 30000
-        }
-      ]
+      "status": "empty",
+      "id": 1
     },
     {
       "room": "102",

@@ -1,35 +1,7 @@
 import "./check-in.scss";
 import { useEffect, useState, useRef } from "react";
 import Modal from "../../modal/Modal";
-
-function timeNow() {
-   const now = new Date();
-   const h = now.getHours();
-   const m = now.getMinutes();
-   const hh = h < 10 ? "0" + h : h;
-   const mm = m < 10 ? "0" + m : m;
-   return hh + ":" + mm;
-}
-
-function dateNow() {
-   const now = new Date();
-   const y = now.getFullYear();
-   const m = now.getMonth() + 1;
-   const d = now.getDate();
-   const mm = m < 10 ? "0" + m : m;
-   const dd = d < 10 ? "0" + d : d;
-   return y + "-" + mm + "-" + dd;
-}
-
-function tomorrow() {
-   const now = new Date();
-   const y = now.getFullYear();
-   const m = now.getMonth() + 1;
-   const d = now.getDate() + 1;
-   const mm = m < 10 ? "0" + m : m;
-   const dd = d < 10 ? "0" + d : d;
-   return y + "-" + mm + "-" + dd;
-}
+import { timeNow, dateNow, tomorrow } from "../../../script";
 
 function TimeForm(props) {
    return (
@@ -152,14 +124,14 @@ function RoomInfo(props) {
                />
             </label>
             {props.roomInfo.prepay ? (
-               props.roomInfo.payment === "" ? (
-                  props.updatePayment && (
+               props.roomInfo.prePayment === "" ? (
+                  props.updatePayment() && (
                      <label>
                         Hình thức:
                         <select
                            className="input room-info"
-                           name="payment"
-                           value={props.roomInfo.payment}
+                           name="prePayment"
+                           value={props.roomInfo.prePayment}
                            onChange={props.updateRoomInfo}
                         >
                            <option value="cash">Tiền mặt</option>
@@ -172,8 +144,8 @@ function RoomInfo(props) {
                      Hình thức:
                      <select
                         className="input room-info"
-                        name="payment"
-                        value={props.roomInfo.payment}
+                        name="prePayment"
+                        value={props.roomInfo.prePayment}
                         onChange={props.updateRoomInfo}
                      >
                         <option value="cash">Tiền mặt</option>
@@ -285,7 +257,7 @@ export default function FormCheckIn(props) {
       hourOut: "",
       room: props.status.room,
       prepay: "",
-      payment: "",
+      prePayment: "",
       note: "",
    });
 
@@ -359,9 +331,9 @@ export default function FormCheckIn(props) {
       setRoomInfo((prev) => ({ ...prev, [e.target.name]: e.target.value }));
    };
    const updatePayment = () => {
-      setRoomInfo((prev) => ({ ...prev, payment: "cash" }));
+      setRoomInfo((prev) => ({ ...prev, prePayment: "cash" }));
    };
-
+   console.log(roomInfo);
    return (
       <Modal
          title="Nhận phòng"

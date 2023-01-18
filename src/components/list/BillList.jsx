@@ -47,9 +47,9 @@ export default function BillList(props) {
          <table>
             <thead>
                <tr>
-                  <th>Id</th>
-                  <th>Room</th>
-                  <th>Customer</th>
+                  <th style={{ width: "5%" }}>Id</th>
+                  <th style={{ width: "10%" }}>Room</th>
+                  <th style={{ width: "15%" }}>Customer</th>
                   <th>Date</th>
                   <th>Total</th>
                   <th>Cashier</th>
