@@ -1,5 +1,12 @@
 import "./check-out.scss";
-import { useEffect, useState, useRef, createElement, useReducer } from "react";
+import {
+   useEffect,
+   useState,
+   useRef,
+   createElement,
+   useReducer,
+   useMemo,
+} from "react";
 import { BsPlusCircle } from "react-icons/bs";
 import { BsTrash } from "react-icons/bs";
 import Modal from "../../modal/Modal";
@@ -12,10 +19,27 @@ import {
    subDate,
 } from "../../../script";
 
+const CalPriceRoom = (hour, price, late) => {
+   if (hour == 0) {
+      return 0;
+   } else {
+      if (hour == 1) {
+         return price;
+      } else {
+         return Number(price) + Number(hour - 1) * late;
+      }
+   }
+};
+
+const getRoomType = (room) => {};
+
 export default function CheckOut(props) {
-   const [room, setRoom] = useState();
-   const [price, setPrice] = useState();
-   const [servicedata, setServiceData] = useState();
+   const [data, setData] = useState({
+      room: [],
+      price: [],
+      service: [],
+   });
+   const [payment, setPayment] = useState("cash");
    const [bill, setBill] = useState({
       room: "",
       customer: "",
@@ -30,9 +54,10 @@ export default function CheckOut(props) {
       service: [],
       servicePrice: "",
       prepay: "",
+      prePayment: "",
       priceTotal: "",
-      payment: "",
       dateBill: "",
+      payment: "",
    });
 
    useEffect(() => {
@@ -44,29 +69,16 @@ export default function CheckOut(props) {
          fetch("http://localhost:8000/services").then((value) => value.json()),
       ])
          .then(([r, p, s]) => {
-            setRoom(r);
-            setPrice(p);
-            setServiceData(s);
+            // setData((prev) => ({ ...prev, room: r, price: p, service: s }));
+            setData((prev) => ({ ...prev, room: r }));
+            setData((prev) => ({ ...prev, price: p }));
+            setData((prev) => ({ ...prev, service: s }));
          })
          .catch((err) => {
             console.log(err);
          });
    }, []);
-
-   let type;
-
-   room?.forEach((res) => {
-      if (res.roomName === props.status.room) {
-         type = res.roomType;
-      }
-   });
-
-   const priceOfRoom = price?.find((res) => {
-      if (res.roomType === type && res.method === props.status.method) {
-         return res;
-      }
-   });
-
+   console.log(data);
    const initState = {
       service: { name: "Nước suối", number: 0, price: 0 },
       services: props.status.services ? props.status.services : [],
@@ -108,7 +120,7 @@ export default function CheckOut(props) {
             }
             if (action.e.target.name === "number") {
                var price;
-               servicedata?.map((res) => {
+               data.service?.map((res) => {
                   if (res.name === state.service.name) {
                      price = res.price;
                   }
@@ -156,15 +168,31 @@ export default function CheckOut(props) {
       formatDate(props.status.dateIn),
       formatDate(currentDate)
    );
-   const roundTotalTime = roundTime(totalTime);
-   const roomPrice =
-      Number(priceOfRoom?.price) +
-      (roundTotalTime - 1) * Number(priceOfRoom?.late);
+
+   console.log(data);
+   let type;
+   data.room?.forEach((res) => {
+      if (res.roomName === props.status.room) {
+         type = res.roomType;
+      }
+   });
+
+   const priceOfRoom = data.price?.find((res) => {
+      if (res.roomType === type && res.method === props.status.method) {
+         return res;
+      }
+   });
+   // const time = roundTime(totalTime);
    const servicePrice = services?.reduce((total, current) => {
       return total + current.price;
    }, 0);
-   const prepay = props.prepay ? props.prepay : 0;
-   const totalPrice = roomPrice + servicePrice - prepay;
+
+   const prepay = props.status.prepay ? props.status.prepay : 0;
+   // const roomPrice = CalPriceRoom(time, priceOfRoom.price, priceOfRoom.late);
+   // console.log(roomPrice);
+   // const totalPrice = useMemo(() => {
+   //    return roomPrice + servicePrice - prepay;
+   // }, [servicePrice]);
 
    const handleSave = () => {
       const newService = [...state.services];
@@ -184,7 +212,7 @@ export default function CheckOut(props) {
          }
          return [...total, current];
       }, []);
-      console.log(mergeService);
+      // console.log(mergeService);
       fetch(`http://localhost:8000/room-status/${props.status.id}`, {
          method: "PATCH",
          headers: { "Content-Type": "application/json" },
@@ -202,10 +230,10 @@ export default function CheckOut(props) {
          dateOut: currentDate,
          totalHour: totalTime,
          totalDate: totalDate,
-         roomPrice: roomPrice,
+         // roomPrice: roomPrice,
          services: services,
          servicePrice: servicePrice,
-         totalPrice: totalPrice,
+         // totalPrice: totalPrice,
          dateBill: currentTime,
       };
       delete newBill.id;
@@ -223,7 +251,7 @@ export default function CheckOut(props) {
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({
                room: newBill.room,
-               status: "not clean",
+               status: "notclean",
                id: props.status.id,
             }),
          }),
@@ -263,8 +291,8 @@ export default function CheckOut(props) {
                   </div>
                </div>
                <div>
-                  <p>Tổng tiền phòng:</p>
-                  <div className="display time-date price">{roomPrice}</div>
+                  <p>Tiền phòng:</p>
+                  <div className="display time-date price"></div>
                </div>
                <div className="service">
                   <p className="service__label">Dịch vụ</p>
@@ -276,7 +304,7 @@ export default function CheckOut(props) {
                         dispatch(setService(e));
                      }}
                   >
-                     {servicedata?.map((res) => (
+                     {data.service?.map((res) => (
                         <option key={res.id} value={res.name}>
                            {res.name}
                         </option>
@@ -313,24 +341,44 @@ export default function CheckOut(props) {
 
                <div>
                   <p>Trả trước:</p>
-                  <div className="display time-date price">{prepay}</div>
+                  <div className="display time-date price">
+                     {props.status.prepay}
+                  </div>
+               </div>
+               <div>
+                  <p>Phương thức trả trước:</p>
+                  <div className="display time-date price">
+                     {props.status.prePayment}
+                  </div>
                </div>
                <div>
                   <p>Tổng tiền:</p>
                   <div className="display time-date price">
-                     <p>{totalPrice}</p>
+                     {/* <p>{totalPrice}</p> */}
                   </div>
+               </div>
+               <div>
+                  <p>Hình thức:</p>
+                  <select
+                     className="input room-info"
+                     name="prePayment"
+                     value={payment}
+                     onChange={(e) => setPayment(e.target.value)}
+                  >
+                     <option value="cash">Tiền mặt</option>
+                     <option value="tranfer">Chuyển khoản</option>
+                  </select>
                </div>
             </div>
          }
          footer={
             <>
-               <button onClick={() => handleSave()} className="btn btn-submit">
+               <button className="btn btn-submit" onClick={() => handleSave()}>
                   Lưu
                </button>
                <button
-                  onClick={() => handleCheckOut()}
                   className="btn btn-submit"
+                  onClick={() => handleCheckOut()}
                >
                   Thanh toán
                </button>

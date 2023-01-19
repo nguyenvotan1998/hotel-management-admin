@@ -1,14 +1,12 @@
 import { memo, useState } from "react";
 import "./room-page.scss";
 import Container from "../../components/container/Container";
-import AddRoom from "../../components/form/add/AddRoom";
+// import AddRoom from "../../components/form/add/AddRoom";
 import FloorList from "../../components/list/FloorList";
 import RoomTypeList from "../../components/list/RoomTypeList";
 import RoomList from "../../components/list/RoomList";
 
 function RoomPage() {
-   const [open, setOpen] = useState(false);
-
    return (
       <div className="page">
          <Container
@@ -22,15 +20,6 @@ function RoomPage() {
          />
          <Container
             title="Danh sách phòng"
-            isButton={true}
-            button={
-               <>
-                  <button className="btn" onClick={() => setOpen(true)}>
-                     Thêm phòng
-                  </button>
-                  {open && <AddRoom setOpen={setOpen} />}
-               </>
-            }
             body={
                <>
                   <RoomList />
@@ -41,4 +30,4 @@ function RoomPage() {
    );
 }
 
-export default memo(RoomPage);
+export default RoomPage;

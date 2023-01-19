@@ -1,7 +1,6 @@
 import "./list.scss";
 import { useState } from "react";
 import useFetch from "../hooks/useFetch";
-import AddFloor from "../form/add/AddFloor";
 import { BsTrash } from "react-icons/bs";
 import { BsPencil } from "react-icons/bs";
 export default function BillList(props) {
@@ -13,7 +12,14 @@ export default function BillList(props) {
       array?.map((res) => (
          <tr key={res.id}>
             <td>{res.id}</td>
-            <td>{res.name}</td>
+            <td>{res.room}</td>
+            <td>{res.customer}</td>
+            <td>{res.hourOut + " " + res.dateOut}</td>
+            <td>{res.prepay + " - " + res.prePayment.toUpperCase()}</td>
+            <td>{res.roomPrice}</td>
+            <td>{res.servicePrice}</td>
+            <td>{res.totalPrice}</td>
+            <td></td>
             <td>
                <BsPencil className="icon icon__edit" onClick={viewDetail} />
             </td>
@@ -42,7 +48,7 @@ export default function BillList(props) {
             <button className="btn btn-add" onClick={() => setOpenForm(true)}>
                Thêm lầu
             </button>
-            {openForm && <AddFloor setOpenForm={setOpenForm} />}
+            {/* {openForm && <AddFloor setOpenForm={setOpenForm} />} */}
          </div>
          <table>
             <thead>
@@ -51,6 +57,9 @@ export default function BillList(props) {
                   <th style={{ width: "10%" }}>Room</th>
                   <th style={{ width: "15%" }}>Customer</th>
                   <th>Date</th>
+                  <th>Prepay</th>
+                  <th>Room Price</th>
+                  <th>Service Price</th>
                   <th>Total</th>
                   <th>Cashier</th>
                   <th>View Details</th>

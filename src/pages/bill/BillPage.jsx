@@ -1,10 +1,10 @@
 import "./bill-page.scss";
 import { useState } from "react";
 import Container from "../../components/container/Container";
-import AddRoom from "../../components/form/add/AddRoom";
-import FloorList from "../../components/list/FloorList";
-import RoomTypeList from "../../components/list/RoomTypeList";
-import RoomList from "../../components/list/RoomList";
+// import AddRoom from "../../components/form/add/AddRoom";
+// import FloorList from "../../components/list/FloorList";
+// import RoomTypeList from "../../components/list/RoomTypeList";
+// import RoomList from "../../components/list/RoomList";
 import BillList from "../../components/list/BillList";
 
 function Header(props) {
@@ -16,7 +16,7 @@ function Header(props) {
          <button className="btn" onClick={() => props.setOpen(true)}>
             Tìm
          </button>
-         {props.open && <AddRoom setOpen={props.setOpen} />}
+         {/* {props.open && <AddRoom setOpen={props.setOpen} />} */}
       </div>
    );
 }

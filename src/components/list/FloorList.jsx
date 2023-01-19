@@ -2,15 +2,14 @@ import "./list.scss";
 import { useState, useRef, useEffect, memo } from "react";
 import useFetch from "../hooks/useFetch";
 import Modal from "../modal/Modal";
-import AddFloor from "../form/add/AddFloor";
 import { BsTrash } from "react-icons/bs";
 import { BsPencil } from "react-icons/bs";
 
-function EditFloor(props) {
-   const [floorName, setFloorName] = useState(props.name);
+function AddFloor(props) {
+   const [floorName, setFloorName] = useState();
 
    useEffect(() => {
-      props.floorRef.current.focus();
+      props.nameRef.current.focus();
    }, []);
 
    const handleSubmit = (e) => {
@@ -22,31 +21,27 @@ function EditFloor(props) {
             name: floorName,
          }),
       });
-      window.location.reload(false);
+      props.onLoad();
+      props.setOpen(false);
    };
 
    return (
       <>
          <Modal
-            title="Sửa lầu"
+            title="Thêm lầu"
             setOpen={props.setOpen}
             body={
-               <>
-                  <label>
-                     Id lầu:
-                     <input type="text" value={props.id} readOnly />
-                  </label>
-                  <label>
+               <div className="form">
+                  <label className="input">
                      Tên lầu:
                      <input
                         type="text"
-                        ref={props.floorRef}
-                        name="name"
-                        value={floorName}
+                        ref={props.nameRef}
+                        name="floorName"
                         onChange={(e) => setFloorName(e.target.value)}
                      />
                   </label>
-               </>
+               </div>
             }
             footer={
                <>
@@ -59,24 +54,78 @@ function EditFloor(props) {
       </>
    );
 }
-function FloorList(props) {
-   const { data, loading, error } = useFetch("http://localhost:8000/floors");
-   const [openAdd, setOpenAdd] = useState(false);
-   const [openEdit, setOpenEdit] = useState(false);
 
+function EditFloor(props) {
+   const [floorName, setFloorName] = useState(props.name);
+
+   useEffect(() => {
+      props.nameRef.current.focus();
+   }, []);
+
+   const handleSubmit = (e) => {
+      e.preventDefault();
+      fetch(`http://localhost:8000/floors/${props.id}`, {
+         method: "PATCH",
+         headers: { "Content-Type": "application/json" },
+         body: JSON.stringify({
+            name: floorName,
+         }),
+      });
+      props.onLoad();
+      props.setOpen(false);
+   };
+
+   return (
+      <>
+         <Modal
+            title="Sửa lầu"
+            setOpen={props.setOpen}
+            body={
+               <div className="form">
+                  <label className="input">
+                     Id lầu:
+                     <input type="text" value={props.id} readOnly />
+                  </label>
+                  <label className="input">
+                     Tên lầu:
+                     <input
+                        type="text"
+                        ref={props.nameRef}
+                        name="name"
+                        value={floorName}
+                        onChange={(e) => setFloorName(e.target.value)}
+                     />
+                  </label>
+               </div>
+            }
+            footer={
+               <>
+                  <button onClick={handleSubmit} className="btn btn-submit">
+                     Thực hiện
+                  </button>
+               </>
+            }
+         />
+      </>
+   );
+}
+
+function FloorList(props) {
+   const [load, setLoad] = useState(false);
+   const { data, loading, error } = useFetch(
+      "http://localhost:8000/floors",
+      load
+   );
+   const [open, setOpen] = useState({
+      add: false,
+      edit: false,
+   });
    const [floorEdit, setFloorEdit] = useState({
       id: "",
       name: "",
    });
-   const floorRef = useRef();
 
-   const handleEdit = (id) => {
-      const floorChoose = data?.find((current) =>
-         current.id === id ? current : null
-      );
-      setFloorEdit(floorChoose);
-      setOpenEdit(true);
-   };
+   const nameRef = useRef();
 
    const render = (array) =>
       array?.map((res) => (
@@ -92,33 +141,50 @@ function FloorList(props) {
             <td>
                <BsTrash
                   className="icon icon__delete"
-                  onClick={() => deleteFloor(res.id)}
+                  onClick={() => handleDelete(res.id)}
                />
             </td>
          </tr>
       ));
-   const formRef = useRef();
-
-   function deleteFloor(id) {
+   const handleEdit = (id) => {
+      const floorChoose = data?.find((current) =>
+         current.id === id ? current : null
+      );
+      setFloorEdit(floorChoose);
+      setOpen((prev) => ({ ...prev, edit: true }));
+   };
+   const handleDelete = (id) => {
       fetch(`http://localhost:8000/floors/${id}`, {
          method: "delete",
       });
-      formRef.current.reset();
-      // window.location.reload(false);
-   }
+      handleReLoad();
+   };
 
+   const handleReLoad = () => {
+      setLoad(!load);
+   };
    return (
-      <div ref={formRef} className="list">
+      <div className="list">
          <div className="list__header">
             <h3 className="title list__title">Thông tin lầu</h3>
-            <button className="btn btn-add" onClick={() => setOpenAdd(true)}>
+            <button
+               className="btn btn-add"
+               onClick={() => setOpen((prev) => ({ ...prev, add: true }))}
+            >
                Thêm lầu
             </button>
-            {openAdd && <AddFloor setOpen={setOpenAdd} />}
-            {openEdit && (
+            {open.add && (
+               <AddFloor
+                  setOpen={setOpen}
+                  nameRef={nameRef}
+                  onLoad={handleReLoad}
+               />
+            )}
+            {open.edit && (
                <EditFloor
-                  setOpen={setOpenEdit}
-                  floorRef={floorRef}
+                  setOpen={setOpen}
+                  nameRef={nameRef}
+                  onLoad={handleReLoad}
                   id={floorEdit.id}
                   name={floorEdit.name}
                />

@@ -29,186 +29,59 @@
     {
       "name": "Lớn",
       "id": 3
-    },
-    {
-      "name": "Vip",
-      "id": 4
     }
   ],
   "rooms": [
     {
-      "roomName": "101",
+      "room": "101",
       "floor": "Lầu 1",
-      "roomType": "Nhỏ",
-      "bedNumber": 1,
-      "peopleNumber": 2,
+      "type": "Nhỏ",
+      "numberBed": 1,
+      "numberPeople": 2,
       "id": 1
     },
     {
-      "roomName": "102",
+      "room": "102",
       "floor": "Lầu 1",
-      "roomType": "Trung",
-      "bedNumber": 1,
-      "peopleNumber": 2,
+      "type": "Trung",
+      "numberBed": 1,
+      "numberPeople": 2,
       "id": 2
     },
     {
-      "roomName": "103",
+      "room": "103",
       "floor": "Lầu 1",
-      "roomType": "Lớn",
-      "bedNumber": 1,
-      "peopleNumber": 2,
+      "type": "Lớn",
+      "numberBed": 1,
+      "numberPeople": 2,
       "id": 3
-    },
-    {
-      "roomName": "201",
-      "floor": "Lầu 2",
-      "roomType": "Nhỏ",
-      "bedNumber": 1,
-      "peopleNumber": 2,
-      "id": 4
-    },
-    {
-      "roomName": "202",
-      "floor": "Lầu 2",
-      "roomType": "Trung",
-      "bedNumber": 1,
-      "peopleNumber": 2,
-      "id": 5
-    },
-    {
-      "roomName": "203",
-      "floor": "Lầu 2",
-      "roomType": "Lớn",
-      "bedNumber": 1,
-      "peopleNumber": 2,
-      "id": 6
     }
   ],
   "customers": [
     {
       "name": "Võ Tấn Nguyên",
-      "card": "206204159",
-      "phone": "0968578108",
-      "address": "627 Xô Viết Nghệ Tĩnh",
-      "sex": "Male",
-      "birthday": "2023-01-13",
-      "id": 1
-    },
-    {
-      "name": "Võ Tấn Nguyên",
-      "card": "206204159",
-      "phone": "0968578108",
-      "address": "627 xô viêt n",
+      "card": "213012381",
+      "phone": "21301823102",
+      "address": "2349123812",
       "sex": "Male",
       "birthday": "2023-01-14",
-      "id": 2
-    },
-    {
-      "name": "Đoàn Chí Linh",
-      "card": "340128300",
-      "phone": "0947382239",
-      "address": "832 Điện Biên Phủ",
-      "sex": "Female",
-      "birthday": "2023-01-04",
-      "id": 4
-    },
-    {
-      "name": "Lê Thị Hậu",
-      "card": "038195000756",
-      "phone": "0957847367",
-      "address": "Phượng Khê, Hoằng Lưu, Hoằng Hóa, Thanh Hóa",
-      "sex": "Female",
-      "birthday": "1990-01-31",
-      "id": 5
-    },
-    {
-      "name": "Lê Thị Ái Ân",
-      "card": "293401259239",
-      "phone": "0957847329",
-      "address": "8/2 Trần Hưng Đạo, Phường 23, Quận Tân Bình, Hồ Chí Minh",
-      "sex": "Male",
-      "birthday": "2022-12-28",
-      "id": 6
-    },
-    {
-      "name": "Đỗ Đan Trường",
-      "card": "261466950",
-      "phone": "0976574875",
-      "address": "Huy Khiêm, Tánh Linh, Bình Thuận",
-      "sex": "Male",
-      "birthday": "1996-06-05",
-      "id": 7
-    },
-    {
-      "name": "Nguyễn Thị Ngọc Giàu",
-      "card": "312362988",
-      "phone": "0927573912",
-      "address": "Hiệp Phú, Hiệp Đức, Cai Lậy, Tiền Giang",
-      "sex": "Female",
-      "birthday": "1998-03-06",
-      "id": 8
-    },
-    {
-      "name": "Bùi Thị Ngọc Sương",
-      "card": "060182007639",
-      "phone": "0938290209",
-      "address": "Tổ 1, Khu Phố 2, Phú Trinh, Phan Thiết, Bình Thuận",
-      "sex": "Female",
-      "birthday": "1982-04-04",
-      "id": 9
-    },
-    {
-      "name": "Bùi Thị Ngọc Sương",
-      "card": "060182007639",
-      "phone": "0987548209",
-      "address": "Tổ 1, Khu Phố 2, Phú Trinh, Phan Thiết, Bình Thuận",
-      "sex": "Female",
-      "birthday": "1998-03-07",
-      "id": 10
-    },
-    {
-      "name": "Nguyễn Phước Anh",
-      "card": "051077010954",
-      "phone": "0938279109",
-      "address": "Số 1B Suối Lội, Tổ 2, Ấp 2, Phước Vĩnh An, Củ Chi, Hồ Chí Minh",
-      "sex": "Male",
-      "birthday": "1977-10-12",
-      "id": 11
-    },
-    {
-      "name": "",
-      "card": "",
-      "phone": "",
-      "address": "",
-      "sex": "Male",
-      "birthday": "",
-      "id": 12
-    },
-    {
-      "name": "Phan Văn Long",
-      "card": "046085009350",
-      "phone": "0987483900",
-      "address": "10.06 CC Greenfield, 686 XVNT, Phường 25, Bình Thạnh, Hồ Chí Minh",
-      "sex": "Male",
-      "birthday": "1985-12-30",
-      "id": 13
-    },
-    {
-      "name": "Võ Tấn Nguyên",
-      "card": "206204159",
-      "phone": "0968578108",
-      "address": "627 Xô Viết Nghệ Tĩnh, Phường 26, Quận Bình Thạnh",
-      "sex": "Male",
-      "birthday": "1998-08-17",
-      "id": 14
+      "id": 1
     }
   ],
   "room-status": [
     {
       "room": "101",
-      "status": "empty",
-      "id": 1
+      "status": "using",
+      "id": 1,
+      "method": "hours",
+      "dateIn": "2023-01-19",
+      "hourIn": "07:20",
+      "dateOut": "2023-01-19",
+      "hourOut": "",
+      "prepay": "50000",
+      "prePayment": "cash",
+      "note": "",
+      "customer": "Võ Tấn Nguyên"
     },
     {
       "room": "102",
@@ -219,21 +92,6 @@
       "room": "103",
       "status": "empty",
       "id": 3
-    },
-    {
-      "room": "201",
-      "status": "empty",
-      "id": 4
-    },
-    {
-      "room": "202",
-      "status": "empty",
-      "id": 5
-    },
-    {
-      "room": "203",
-      "status": "empty",
-      "id": 6
     }
   ],
   "room-prices": [
@@ -258,9 +116,48 @@
       "early": "40000",
       "late": "40000",
       "id": 3
+    },
+    {
+      "roomType": "Lớn",
+      "method": "hours",
+      "price": "150000",
+      "late": "40000",
+      "id": 4
     }
   ],
-  "bills": [],
+  "bills": [
+    {
+      "room": "101",
+      "method": "hours",
+      "dateIn": "2023-01-18",
+      "hourIn": "13:53",
+      "dateOut": "2023-01-18",
+      "hourOut": "14:06",
+      "prepay": "80000",
+      "prePayment": "cash",
+      "note": "",
+      "customer": "Võ Tấn Nguyên",
+      "totalHour": "00:13",
+      "totalDate": "00/00",
+      "roomPrice": 60000,
+      "services": [
+        {
+          "name": "Nước ngọt",
+          "number": "1",
+          "price": 15000
+        },
+        {
+          "name": "Nước suối",
+          "number": "1",
+          "price": 15000
+        }
+      ],
+      "servicePrice": 30000,
+      "totalPrice": 10000,
+      "dateBill": "14:06",
+      "id": 1
+    }
+  ],
   "services": [
     {
       "id": 1,

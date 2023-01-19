@@ -4,8 +4,11 @@ import { IoIosArrowUp } from "react-icons/io";
 import { IoIosArrowDown } from "react-icons/io";
 import { BsDash } from "react-icons/bs";
 import { BsCheck2Circle } from "react-icons/bs";
+import { BsCash } from "react-icons/bs";
+import { BsBank } from "react-icons/bs";
+
 import RoomSettingList from "../setting/room-settings/RoomSettingList";
-import FormCheckIn from "../form/check-in/CheckIn";
+import CheckIn from "../form/check-in/CheckIn";
 import CheckOut from "../form/check-out/CheckOut";
 
 function formatDate(value) {
@@ -14,13 +17,17 @@ function formatDate(value) {
 }
 
 function RoomStatus(props) {
-   const [openSetting, setOpenSetting] = useState(false);
-   const [openForm, setOpenForm] = useState(false);
+   const [open, setOpen] = useState({
+      setting: false,
+      checkin: false,
+      checkout: false,
+   });
 
    const handleSetting = (e) => {
       e.stopPropagation();
-      setOpenSetting(!openSetting);
+      setOpen((prev) => ({ ...prev, setting: !open.setting }));
    };
+
    const handleDbClick = () => {
       fetch(`http://localhost:8000/room-status/${props.status.id}`, {
          method: "PATCH",
@@ -30,25 +37,43 @@ function RoomStatus(props) {
             status: "empty",
          }),
       });
-      window.location.reload();
+      props.onLoad();
+   };
+
+   const handleOpen = () => {
+      switch (props.status.status) {
+         case "empty":
+            setOpen((prev) => ({ ...prev, checkin: true }));
+            break;
+         case "using":
+            setOpen((prev) => ({ ...prev, checkout: true }));
+            break;
+         default:
+            console.log("Lỗi open!!!");
+            break;
+      }
    };
 
    return (
       <div
          className="room-status"
          style={{ backgroundColor: `${props.bg}` }}
-         onClick={() => setOpenForm(true)}
+         onClick={handleOpen}
          onDoubleClick={handleDbClick}
       >
-         {props.status.status === "empty"
-            ? openForm && (
-                 <FormCheckIn setOpen={setOpenForm} status={props.status} />
-              )
-            : props.status.status === "using"
-            ? openForm && (
-                 <CheckOut setOpen={setOpenForm} status={props.status} />
-              )
-            : null}
+         {open.checkin && props.status.status === "empty" ? (
+            <CheckIn
+               setOpen={setOpen}
+               onLoad={props.onLoad}
+               status={props.status}
+            />
+         ) : open.checkout && props.status.status === "using" ? (
+            <CheckOut
+               setOpen={setOpen}
+               onLoad={props.onLoad}
+               status={props.status}
+            />
+         ) : null}
          <div className="room-status__header">
             <div className="room-status__room-number">
                <span>{props.status.room}</span>
@@ -59,9 +84,7 @@ function RoomStatus(props) {
                      {props.totalTime}
                   </div>
                </>
-            ) : (
-               <></>
-            )}
+            ) : null}
             <div className="room-status__status-icons">{props.iconStatus}</div>
             <div className="room-status__time-stay">
                {props.status.status === "empty" ||
@@ -95,6 +118,7 @@ function RoomStatus(props) {
                   </>
                )}
             </div>
+
             <div className="room-status__time-total">
                <div className="date-total">{props.dateTotal}</div>
                <div className="hour-total">{props.hourTotal}</div>
@@ -105,7 +129,11 @@ function RoomStatus(props) {
                {props.status.customer}
             </div>
             {props.status.prepay ? (
-               <BsCheck2Circle className="room-status__prepay" />
+               props.status.prePayment === "cash" ? (
+                  <BsCash className="room-status__prepay" />
+               ) : props.status.prePayment === "tranfer" ? (
+                  <BsBank className="room-status__prepay" />
+               ) : null
             ) : null}
          </div>
          <div className="room-status__footer">
@@ -114,7 +142,7 @@ function RoomStatus(props) {
                onClick={props.changeColor}
             ></div>
             <div className="room-status__setting" onClick={handleSetting}>
-               {openSetting ? (
+               {open.setting ? (
                   <>
                      <IoIosArrowUp />
                      <RoomSettingList room={props.status.room} />

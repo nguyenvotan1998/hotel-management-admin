@@ -17,6 +17,16 @@ export function dateNow() {
    return y + "-" + mm + "-" + dd;
 }
 
+export function dateNowForDisplay() {
+   const now = new Date();
+   const y = now.getFullYear();
+   const m = now.getMonth() + 1;
+   const d = now.getDate();
+   const mm = m < 10 ? "0" + m : m;
+   const dd = d < 10 ? "0" + d : d;
+   return dd + "-" + mm + "-" + y;
+}
+
 export function tomorrow() {
    const now = new Date();
    const y = now.getFullYear();
@@ -40,7 +50,7 @@ export function subTime(timeIn, timeOut) {
 
    if (minuteOut >= minuteIn) {
       totalMinute = minuteOut - minuteIn;
-      if (hourOut > hourIn) {
+      if (hourOut >= hourIn) {
          totalHour = hourOut - hourIn;
       } else {
          totalHour = 24 - hourIn + hourOut;

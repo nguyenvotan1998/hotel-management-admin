@@ -11,8 +11,15 @@ export default function Modal(props) {
       e.stopPropagation();
       props.setOpen(false);
    };
+
+   const handleKeyEscape = (e) => {
+      if (e.key === "Escape") {
+         props.setOpen(false);
+      }
+   };
+
    return (
-      <div className="modal">
+      <div className="modal" onKeyDown={handleKeyEscape}>
          <div className="modal__overlay" onClick={closeByOverlay}></div>
          <div className="modal__content">
             <div className="modal__header">
