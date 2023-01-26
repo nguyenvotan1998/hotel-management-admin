@@ -126,6 +126,11 @@ function RoomTypeList() {
    });
    const nameRef = useRef();
 
+   if (error) {
+      console.log(error);
+      return null;
+   }
+
    const render = (array) =>
       array?.map((res) => (
          <tr key={res.id}>

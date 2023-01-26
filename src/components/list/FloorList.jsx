@@ -4,6 +4,8 @@ import useFetch from "../hooks/useFetch";
 import Modal from "../modal/Modal";
 import { BsTrash } from "react-icons/bs";
 import { BsPencil } from "react-icons/bs";
+import Alert from "@mui/material/Alert";
+import Snackbar from "@mui/material/Snackbar";
 
 function AddFloor(props) {
    const [floorName, setFloorName] = useState();
@@ -119,7 +121,9 @@ function FloorList(props) {
    const [open, setOpen] = useState({
       add: false,
       edit: false,
+      alert: false,
    });
+
    const [floorEdit, setFloorEdit] = useState({
       id: "",
       name: "",
@@ -163,8 +167,30 @@ function FloorList(props) {
    const handleReLoad = () => {
       setLoad(!load);
    };
+
+   const handleClose = () => {
+      setOpen((prev) => ({ ...prev, alert: false }));
+   };
+
+   if (error) {
+      console.log(error);
+      return null;
+   }
    return (
       <div className="list">
+         <Snackbar
+            open={open.alert}
+            autoHideDuration={6000}
+            onClose={handleClose}
+         >
+            <Alert
+               onClose={handleClose}
+               severity="error"
+               sx={{ width: "100%" }}
+            >
+               Lỗi load dữ liệu!!!
+            </Alert>
+         </Snackbar>
          <div className="list__header">
             <h3 className="title list__title">Thông tin lầu</h3>
             <button

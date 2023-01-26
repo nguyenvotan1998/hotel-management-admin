@@ -29,15 +29,17 @@ function RoomStatus(props) {
    };
 
    const handleDbClick = () => {
-      fetch(`http://localhost:8000/room-status/${props.status.id}`, {
-         method: "PATCH",
-         headers: { "Content-Type": "application/json" },
-         body: JSON.stringify({
-            ...props.status,
-            status: "empty",
-         }),
-      });
-      props.onLoad();
+      if (props.status.status === "notclean") {
+         fetch(`http://localhost:8000/room-status/${props.status.id}`, {
+            method: "PATCH",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+               ...props.status,
+               status: "empty",
+            }),
+         });
+         props.onLoad();
+      }
    };
 
    const handleOpen = () => {
@@ -79,11 +81,7 @@ function RoomStatus(props) {
                <span>{props.status.room}</span>
             </div>
             {props.status.method === "hours" ? (
-               <>
-                  <div className="room-status__total-time">
-                     {props.totalTime}
-                  </div>
-               </>
+               <div className="room-status__total-time">{props.totalTime}</div>
             ) : null}
             <div className="room-status__status-icons">{props.iconStatus}</div>
             <div className="room-status__time-stay">

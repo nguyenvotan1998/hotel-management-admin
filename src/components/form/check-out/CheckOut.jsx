@@ -1,12 +1,5 @@
 import "./check-out.scss";
-import {
-   useEffect,
-   useState,
-   useRef,
-   createElement,
-   useReducer,
-   useMemo,
-} from "react";
+import { useEffect, useState, useReducer, useMemo } from "react";
 import { BsPlusCircle } from "react-icons/bs";
 import { BsTrash } from "react-icons/bs";
 import Modal from "../../modal/Modal";
@@ -39,6 +32,23 @@ export default function CheckOut(props) {
       price: [],
       service: [],
    });
+   useEffect(() => {
+      Promise.all([
+         fetch("http://localhost:8000/rooms").then((value) => value.json()),
+         fetch("http://localhost:8000/room-prices").then((value) =>
+            value.json()
+         ),
+         fetch("http://localhost:8000/services").then((value) => value.json()),
+      ])
+         .then(([r, p, s]) => {
+            setData((prev) => ({ ...prev, room: r }));
+            setData((prev) => ({ ...prev, price: p }));
+            setData((prev) => ({ ...prev, service: s }));
+         })
+         .catch((err) => {
+            console.log(err);
+         });
+   }, []);
    const [payment, setPayment] = useState("cash");
    const [bill, setBill] = useState({
       room: "",
@@ -60,25 +70,6 @@ export default function CheckOut(props) {
       payment: "",
    });
 
-   useEffect(() => {
-      Promise.all([
-         fetch("http://localhost:8000/rooms").then((value) => value.json()),
-         fetch("http://localhost:8000/room-prices").then((value) =>
-            value.json()
-         ),
-         fetch("http://localhost:8000/services").then((value) => value.json()),
-      ])
-         .then(([r, p, s]) => {
-            // setData((prev) => ({ ...prev, room: r, price: p, service: s }));
-            setData((prev) => ({ ...prev, room: r }));
-            setData((prev) => ({ ...prev, price: p }));
-            setData((prev) => ({ ...prev, service: s }));
-         })
-         .catch((err) => {
-            console.log(err);
-         });
-   }, []);
-   console.log(data);
    const initState = {
       service: { name: "Nước suối", number: 0, price: 0 },
       services: props.status.services ? props.status.services : [],
@@ -106,6 +97,7 @@ export default function CheckOut(props) {
          e,
       };
    };
+
    const reducer = (state, action) => {
       switch (action.type) {
          case SET_SERVICE:
@@ -169,34 +161,49 @@ export default function CheckOut(props) {
       formatDate(currentDate)
    );
 
-   console.log(data);
-   let type;
-   data.room?.forEach((res) => {
-      if (res.roomName === props.status.room) {
-         type = res.roomType;
-      }
-   });
-
-   const priceOfRoom = data.price?.find((res) => {
-      if (res.roomType === type && res.method === props.status.method) {
-         return res;
-      }
-   });
-   // const time = roundTime(totalTime);
    const servicePrice = services?.reduce((total, current) => {
       return total + current.price;
    }, 0);
 
-   const prepay = props.status.prepay ? props.status.prepay : 0;
+   const prepay = props.status.prepay ? Number(props.status.prepay) : 0;
+
+   const [roomPrice, totalPrice] = useMemo(() => {
+      const time = roundTime(totalTime);
+      let type;
+      data.room?.forEach((res) => {
+         if (res.room === props.status.room) {
+            type = res.type;
+         }
+      });
+      const priceOfRoom = data.price?.find((res) => {
+         if (res.roomType === type && res.method === props.status.method) {
+            return res;
+         }
+      });
+
+      const getPrice = priceOfRoom?.price ? Number(priceOfRoom.price) : 0;
+      const getPriceLate = priceOfRoom?.late ? Number(priceOfRoom.late) : 0;
+      console.log(getPrice);
+      console.log(getPriceLate);
+
+      const roomPrice = CalPriceRoom(
+         time,
+         Number(priceOfRoom?.price),
+         Number(priceOfRoom?.late)
+      );
+      const totalPrice = roomPrice + servicePrice - prepay;
+      return [roomPrice, totalPrice];
+   }, [data.room, data.price, servicePrice]);
    // const roomPrice = CalPriceRoom(time, priceOfRoom.price, priceOfRoom.late);
    // console.log(roomPrice);
    // const totalPrice = useMemo(() => {
    //    return roomPrice + servicePrice - prepay;
    // }, [servicePrice]);
 
-   const handleSave = () => {
-      const newService = [...state.services];
-      const mergeService = newService.reduce((total, current, index, array) => {
+   const handleSave = (e) => {
+      e.stopPropagation();
+      // const newService = [...state.services];
+      const mergeService = services?.reduce((total, current) => {
          const dup = total.find((item) => item.name === current.name);
          if (dup) {
             current.number = Number(current.number) + Number(dup.number);
@@ -212,7 +219,6 @@ export default function CheckOut(props) {
          }
          return [...total, current];
       }, []);
-      // console.log(mergeService);
       fetch(`http://localhost:8000/room-status/${props.status.id}`, {
          method: "PATCH",
          headers: { "Content-Type": "application/json" },
@@ -221,43 +227,48 @@ export default function CheckOut(props) {
             services: mergeService,
          }),
       });
-      window.location.reload(false);
+      props.setOpen((prev) => ({ ...prev, checkout: false }));
+      props.onLoad();
    };
-   const handleCheckOut = () => {
-      const newBill = {
-         ...props.status,
-         hourOut: currentTime,
-         dateOut: currentDate,
-         totalHour: totalTime,
-         totalDate: totalDate,
-         // roomPrice: roomPrice,
-         services: services,
-         servicePrice: servicePrice,
-         // totalPrice: totalPrice,
-         dateBill: currentTime,
-      };
-      delete newBill.id;
-      delete newBill.status;
-      Promise.all([
-         fetch("http://localhost:8000/bills", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({
-               ...newBill,
-            }),
-         }),
-         fetch(`http://localhost:8000/room-status/${props.status.id}`, {
-            method: "PUT",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({
-               room: newBill.room,
-               status: "notclean",
-               id: props.status.id,
-            }),
-         }),
-      ]);
-      window.location.reload();
+
+   const handleCheckOut = (e) => {
+      e.stopPropagation();
+      // const newBill = {
+      //    ...props.status,
+      //    hourOut: currentTime,
+      //    dateOut: currentDate,
+      //    totalHour: totalTime,
+      //    totalDate: totalDate,
+      //    // roomPrice: roomPrice,
+      //    services: services,
+      //    servicePrice: servicePrice,
+      //    // totalPrice: totalPrice,
+      //    dateBill: currentTime,
+      // };
+      // delete newBill.id;
+      // delete newBill.status;
+      // Promise.all([
+      //    fetch("http://localhost:8000/bills", {
+      //       method: "POST",
+      //       headers: { "Content-Type": "application/json" },
+      //       body: JSON.stringify({
+      //          ...newBill,
+      //       }),
+      //    }),
+      //    fetch(`http://localhost:8000/room-status/${props.status.id}`, {
+      //       method: "PUT",
+      //       headers: { "Content-Type": "application/json" },
+      //       body: JSON.stringify({
+      //          room: newBill.room,
+      //          status: "notclean",
+      //          id: props.status.id,
+      //       }),
+      //    }),
+      // ]);
+      props.setOpen((prev) => ({ ...prev, checkout: false }));
+      props.onLoad();
    };
+   console.log(props);
 
    return (
       <Modal
@@ -292,10 +303,10 @@ export default function CheckOut(props) {
                </div>
                <div>
                   <p>Tiền phòng:</p>
-                  <div className="display time-date price"></div>
+                  <div className="display time-date price">{roomPrice}</div>
                </div>
                <div className="service">
-                  <p className="service__label">Dịch vụ</p>
+                  <p className="service__label">Dịch vụ:</p>
                   <select
                      className="service__name"
                      name="name"
@@ -341,12 +352,10 @@ export default function CheckOut(props) {
 
                <div>
                   <p>Trả trước:</p>
-                  <div className="display time-date price">
-                     {props.status.prepay}
-                  </div>
+                  <div className="display time-date price">{prepay}</div>
                </div>
                <div>
-                  <p>Phương thức trả trước:</p>
+                  <p>Phương thức:</p>
                   <div className="display time-date price">
                      {props.status.prePayment}
                   </div>
@@ -354,11 +363,11 @@ export default function CheckOut(props) {
                <div>
                   <p>Tổng tiền:</p>
                   <div className="display time-date price">
-                     {/* <p>{totalPrice}</p> */}
+                     <p>{totalPrice}</p>
                   </div>
                </div>
                <div>
-                  <p>Hình thức:</p>
+                  <p>Phương thức:</p>
                   <select
                      className="input room-info"
                      name="prePayment"
@@ -373,13 +382,10 @@ export default function CheckOut(props) {
          }
          footer={
             <>
-               <button className="btn btn-submit" onClick={() => handleSave()}>
+               <button className="btn btn-submit" onClick={handleSave}>
                   Lưu
                </button>
-               <button
-                  className="btn btn-submit"
-                  onClick={() => handleCheckOut()}
-               >
+               <button className="btn btn-submit" onClick={handleCheckOut}>
                   Thanh toán
                </button>
             </>

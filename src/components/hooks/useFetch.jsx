@@ -6,7 +6,12 @@ export default function useFetch(url, load) {
    const [error, setError] = useState(null);
    useEffect(() => {
       fetch(url)
-         .then((res) => res.json())
+         .then((res) => {
+            if (res.status >= 400) {
+               throw new Error("Server responds with error!");
+            }
+            return res.json();
+         })
          .then(
             (data) => {
                setData(data);

@@ -1,7 +1,6 @@
 import { memo, useState } from "react";
 import "./room-page.scss";
 import Container from "../../components/container/Container";
-// import AddRoom from "../../components/form/add/AddRoom";
 import FloorList from "../../components/list/FloorList";
 import RoomTypeList from "../../components/list/RoomTypeList";
 import RoomList from "../../components/list/RoomList";

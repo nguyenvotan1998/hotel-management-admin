@@ -1,13 +1,12 @@
 import "./room-status-list.scss";
-import { useState, useEffect, useRef, useCallback } from "react";
-import useFetch from "../hooks/useFetch";
+import { useState, useEffect, useCallback } from "react";
 import RoomStatus from "../room-status/RoomStatus";
 import { GiBroom } from "react-icons/gi";
 
-function formatDate(value) {
-   const array = value.split("-");
-   return array[2] + "/" + array[1];
-}
+// function formatDate(value) {
+//    const array = value.split("-");
+//    return array[2] + "/" + array[1];
+// }
 
 export default function RoomStatusList() {
    const [data, setData] = useState({
@@ -15,6 +14,7 @@ export default function RoomStatusList() {
       rooms: [],
       status: [],
    });
+
    const [load, setLoad] = useState(false);
 
    useEffect(() => {
@@ -74,8 +74,8 @@ export default function RoomStatusList() {
                                    ) : s.method === "days" ? (
                                       <RoomStatus
                                          key={r.id}
-                                         bg="orange"
                                          onLoad={handleReLoad}
+                                         bg="orange"
                                          status={s}
                                       />
                                    ) : s.method === "book" ? (

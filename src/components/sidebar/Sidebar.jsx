@@ -15,12 +15,6 @@ import {
    redirect,
 } from "react-router-dom";
 
-const menu = [
-   {
-      icon: "",
-   },
-];
-
 function Sidebar() {
    const [open, setOpen] = useState({
       home: false,

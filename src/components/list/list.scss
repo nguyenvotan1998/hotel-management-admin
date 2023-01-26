@@ -18,11 +18,27 @@
    display: flex;
    flex-direction: column;
    gap: 10px;
+   .radio-sex {
+      display: flex;
+      justify-content: space-between;
+   }
    .input {
       > select,
       input {
          width: 50%;
          text-align: center;
+      }
+   }
+
+   .input.radio {
+      display: flex;
+      align-items: center;
+      > p {
+         width: 50%;
+      }
+      > div {
+         width: 50%;
+         display: flex;
       }
    }
 }

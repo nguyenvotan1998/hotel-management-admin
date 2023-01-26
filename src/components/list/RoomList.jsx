@@ -275,6 +275,12 @@ function RoomList() {
    const [roomEdit, setRoomEdit] = useState();
 
    const nameRef = useRef();
+
+   if (error) {
+      console.log(error);
+      // setOpen((prev) => ({ ...prev, alert: true }));
+      return null;
+   }
    const render = (array) =>
       array?.map((res) => (
          <tr key={res.id}>
@@ -315,10 +321,6 @@ function RoomList() {
    const handleReLoad = () => {
       setLoad(!load);
    };
-
-   if (error) {
-      alert("Lỗi load dữ liệu bạn ơi!!!");
-   }
 
    return (
       <div className="list">

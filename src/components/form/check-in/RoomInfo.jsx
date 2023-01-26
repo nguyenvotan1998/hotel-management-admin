@@ -2,6 +2,45 @@ import "./check-in.scss";
 import { memo } from "react";
 
 function RoomInfo(props) {
+   const isPayment = () => {
+      if (props.roomInfo.prepay) {
+         if (props.roomInfo.prePayment === "") {
+            props.updatePayment();
+            return (
+               <label>
+                  Hình thức:
+                  <select
+                     className="input room-info"
+                     name="prePayment"
+                     value={props.roomInfo.prePayment}
+                     onChange={props.updateRoomInfo}
+                  >
+                     <option value="cash">Tiền mặt</option>
+                     <option value="tranfer">Chuyển khoản</option>
+                  </select>
+               </label>
+            );
+         } else {
+            return (
+               <label>
+                  Hình thức:
+                  <select
+                     className="input room-info"
+                     name="prePayment"
+                     value={props.roomInfo.prePayment}
+                     onChange={props.updateRoomInfo}
+                  >
+                     <option value="cash">Tiền mặt</option>
+                     <option value="tranfer">Chuyển khoản</option>
+                  </select>
+               </label>
+            );
+         }
+      } else {
+         return null;
+      }
+   };
+
    return (
       <div className="container-cus-info">
          <span>Thông tin phòng</span>
@@ -89,37 +128,7 @@ function RoomInfo(props) {
                   onChange={props.updateRoomInfo}
                />
             </label>
-            {props.roomInfo.prepay ? (
-               props.roomInfo.prePayment ? (
-                  props.updatePayment() && (
-                     <label>
-                        Hình thức:
-                        <select
-                           className="input room-info"
-                           name="prePayment"
-                           value={props.roomInfo.prePayment}
-                           onChange={props.updateRoomInfo}
-                        >
-                           <option value="cash">Tiền mặt</option>
-                           <option value="tranfer">Chuyển khoản</option>
-                        </select>
-                     </label>
-                  )
-               ) : (
-                  <label>
-                     Hình thức:
-                     <select
-                        className="input room-info"
-                        name="prePayment"
-                        value={props.roomInfo.prePayment}
-                        onChange={props.updateRoomInfo}
-                     >
-                        <option value="cash">Tiền mặt</option>
-                        <option value="tranfer">Chuyển khoản</option>
-                     </select>
-                  </label>
-               )
-            ) : null}
+            {isPayment()}
             <label>
                Ghi chú:
                <input

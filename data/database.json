@@ -57,31 +57,28 @@
       "id": 3
     }
   ],
-  "customers": [
-    {
-      "name": "Võ Tấn Nguyên",
-      "card": "213012381",
-      "phone": "21301823102",
-      "address": "2349123812",
-      "sex": "Male",
-      "birthday": "2023-01-14",
-      "id": 1
-    }
-  ],
+  "customers": [],
   "room-status": [
     {
       "room": "101",
       "status": "using",
       "id": 1,
       "method": "hours",
-      "dateIn": "2023-01-19",
-      "hourIn": "07:20",
-      "dateOut": "2023-01-19",
+      "dateIn": "2023-01-22",
+      "hourIn": "08:59",
+      "dateOut": "2023-01-22",
       "hourOut": "",
-      "prepay": "50000",
-      "prePayment": "cash",
+      "prepay": "",
+      "prePayment": "",
       "note": "",
-      "customer": "Võ Tấn Nguyên"
+      "customer": "Võ Tấn Nguyên",
+      "services": [
+        {
+          "name": "Nước suối",
+          "number": "2",
+          "price": 20000
+        }
+      ]
     },
     {
       "room": "102",
@@ -96,33 +93,28 @@
   ],
   "room-prices": [
     {
-      "roomType": "Nhỏ",
-      "method": "hours",
+      "type": "Nhỏ",
+      "method": "Giờ",
+      "early": null,
       "price": "100000",
       "late": "40000",
       "id": 1
     },
     {
-      "roomType": "Trung",
-      "method": "hours",
+      "type": "Trung",
+      "method": "Giờ",
+      "early": null,
       "price": "120000",
       "late": "40000",
       "id": 2
     },
     {
-      "roomType": "Nhỏ",
-      "method": "days",
-      "price": "300000",
-      "early": "40000",
+      "type": "Lớn",
+      "method": "Giờ",
+      "early": null,
+      "price": "140000",
       "late": "40000",
       "id": 3
-    },
-    {
-      "roomType": "Lớn",
-      "method": "hours",
-      "price": "150000",
-      "late": "40000",
-      "id": 4
     }
   ],
   "bills": [
@@ -156,6 +148,35 @@
       "totalPrice": 10000,
       "dateBill": "14:06",
       "id": 1
+    },
+    {
+      "room": "101",
+      "method": "hours",
+      "dateIn": "2023-01-21",
+      "hourIn": "18:52",
+      "dateOut": "2023-01-21",
+      "hourOut": "21:09",
+      "prepay": "",
+      "prePayment": "",
+      "note": "",
+      "customer": "Võ Tấn Nguyên",
+      "services": [
+        {
+          "name": "Nước suối",
+          "number": "1",
+          "price": 10000
+        },
+        {
+          "name": "Nước ngọt",
+          "number": "1",
+          "price": 10000
+        }
+      ],
+      "totalHour": "02:17",
+      "totalDate": "00/00",
+      "servicePrice": 20000,
+      "dateBill": "21:09",
+      "id": 2
     }
   ],
   "services": [

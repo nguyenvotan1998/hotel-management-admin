@@ -1,8 +1,28 @@
 import "./check-in.scss";
-import { memo } from "react";
+import { memo, useLayoutEffect } from "react";
+import Alert from "@mui/material/Alert";
+import Snackbar from "@mui/material/Snackbar";
 
 function CustomerInfo(props) {
-   //    console.log("customer render");
+   console.log(props.cusInfo.phone);
+
+   // const handleFocus = (e) => {
+   //    if (!onlyDigits(props.cusInfo.phone)) {
+   //       e.target.style.color = "red";
+   //    }
+   // };
+   // useLayoutEffect(
+   //    (e) => {
+   //       handleFocus(e);
+   //    },
+   //    [props.cusInfo.phone]
+   // );
+
+   const handleNotFocus = (e) => {
+      if (props.cusInfo.phone) {
+      }
+      e.target.style.color = "blue";
+   };
    return (
       <div className="container-cus-info">
          <span>Thông tin khách hàng</span>
@@ -31,6 +51,8 @@ function CustomerInfo(props) {
                placeholder="Số điện thoại"
                value={props.cusInfo.phone}
                onChange={props.updateCusInfo}
+               // onInput={handleFocus}
+               // onBlur={handleNotFocus}
             />
             <input
                type="text"

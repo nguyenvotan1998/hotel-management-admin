@@ -1,54 +1,22 @@
 import "./check-in.scss";
-import { useEffect, useState, useRef, useMemo, useCallback, memo } from "react";
+import { useEffect, useState, useRef, useMemo, useCallback } from "react";
 import Modal from "../../modal/Modal";
 import CustomerInfo from "./CustomerInfo";
 import RoomInfo from "./RoomInfo";
 import { timeNow, dateNow, tomorrow } from "../../../script";
-function TimeForm(props) {
-   return (
-      <>
-         <label>
-            Vào:
-            <div>
-               <input
-                  type="date"
-                  name="dateIn"
-                  value={props.dateIn}
-                  onChange={props.event}
-               />
-               <input
-                  type="time"
-                  name="hourIn"
-                  value={props.hourIn}
-                  onChange={props.event}
-               />
-            </div>
-         </label>
-         <label>
-            Ra:
-            <div>
-               <input
-                  type="date"
-                  name="dateOut"
-                  value={props.dateOut}
-                  onChange={props.event}
-               />
-               <input
-                  type="time"
-                  name="hourOut"
-                  value={props.hourOut}
-                  onChange={props.event}
-               />
-            </div>
-         </label>
-      </>
-   );
-}
+import Alert from "@mui/material/Alert";
+import Snackbar from "@mui/material/Snackbar";
 
 export default function CheckIn(props) {
    const currentTime = timeNow();
    const currentDate = dateNow();
    const tomorrowDate = tomorrow();
+   const [alert, setAlert] = useState({
+      name: false,
+      card: false,
+      phone: false,
+      address: false,
+   });
    const userRef = useRef();
    const [roomInfo, setRoomInfo] = useState({
       method: "hours",
@@ -129,7 +97,23 @@ export default function CheckIn(props) {
       props.onLoad();
    };
 
+   function onlyDigits(s) {
+      for (let i = s.length - 1; i >= 0; i--) {
+         const d = s.charCodeAt(i);
+         if (d < 48 || d > 57) return false;
+      }
+      return true;
+   }
+
    const updateCusInfo = useCallback((e) => {
+      if (e.target.name === "phone") {
+         if (!onlyDigits(e.target.value)) {
+            setAlert((prev) => ({ ...prev, phone: true }));
+         } else {
+            setAlert((prev) => ({ ...prev, phone: false }));
+         }
+      }
+
       setCusInfo((prev) => ({ ...prev, [e.target.name]: e.target.value }));
    }, []);
 
@@ -141,33 +125,53 @@ export default function CheckIn(props) {
       setRoomInfo((prev) => ({ ...prev, prePayment: "cash" }));
    }, []);
 
+   const handleClose = useCallback((e) => {
+      setAlert((prev) => ({ ...prev, phone: false }));
+   }, []);
+
    return (
-      <Modal
-         title="Nhận phòng"
-         setOpen={props.setOpen}
-         body={
-            <>
-               <CustomerInfo
-                  userRef={userRef}
-                  cusInfo={cusInfo}
-                  updateCusInfo={updateCusInfo}
-               />
-               <RoomInfo
-                  room={props.status.room}
-                  roomInfo={roomInfo}
-                  setRoomInfo={setRoomInfo}
-                  updatePayment={updatePayment}
-                  updateRoomInfo={updateRoomInfo}
-               />
-            </>
-         }
-         footer={
-            <>
-               <button onClick={handleSubmit} className="btn btn-submit">
-                  Thực hiện
-               </button>
-            </>
-         }
-      />
+      <>
+         <Snackbar
+            open={alert.phone}
+            autoHideDuration={6000}
+            onClose={handleClose}
+         >
+            <Alert
+               onClose={handleClose}
+               severity="error"
+               sx={{ width: "100%" }}
+            >
+               Vui lòng nhập đúng định dạng!
+            </Alert>
+         </Snackbar>
+         <Modal
+            title="Nhận phòng"
+            setOpen={props.setOpen}
+            body={
+               <>
+                  <CustomerInfo
+                     userRef={userRef}
+                     cusInfo={cusInfo}
+                     alert={alert}
+                     handleClose={handleClose}
+                     updateCusInfo={updateCusInfo}
+                  />
+                  <RoomInfo
+                     room={props.status.room}
+                     roomInfo={roomInfo}
+                     updatePayment={updatePayment}
+                     updateRoomInfo={updateRoomInfo}
+                  />
+               </>
+            }
+            footer={
+               <>
+                  <button onClick={handleSubmit} className="btn btn-submit">
+                     Thực hiện
+                  </button>
+               </>
+            }
+         />
+      </>
    );
 }
