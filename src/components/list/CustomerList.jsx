@@ -316,7 +316,6 @@ export default function CustomerList() {
 
    if (error) {
       console.log(error);
-      // setOpen(true);
       return (
          <Snackbar
             anchorOrigin={{ vertical, horizontal }}

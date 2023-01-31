@@ -35,6 +35,8 @@ export default function RoomStatusList() {
          });
    }, [load]);
 
+   // const check
+
    const handleReLoad = useCallback(() => {
       setLoad(!load);
    }, []);
@@ -82,13 +84,8 @@ export default function RoomStatusList() {
                                       <RoomStatus
                                          key={r.id}
                                          onLoad={handleReLoad}
-                                         bg="orange"
-                                         rooms={data.rooms}
-                                         status={s.status}
-                                         roomNumber={r.roomName}
-                                         startDay={s.hoursCheckIn}
-                                         // endDay={time}
-                                         customerName={s.customer}
+                                         bg="blue"
+                                         status={s}
                                       />
                                    ) : null
                                 ) : null

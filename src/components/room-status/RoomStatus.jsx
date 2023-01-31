@@ -6,7 +6,6 @@ import { BsDash } from "react-icons/bs";
 import { BsCheck2Circle } from "react-icons/bs";
 import { BsCash } from "react-icons/bs";
 import { BsBank } from "react-icons/bs";
-
 import RoomSettingList from "../setting/room-settings/RoomSettingList";
 import CheckIn from "../form/check-in/CheckIn";
 import CheckOut from "../form/check-out/CheckOut";

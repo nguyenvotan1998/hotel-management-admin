@@ -3,6 +3,8 @@ import { useState } from "react";
 import useFetch from "../hooks/useFetch";
 import { BsTrash } from "react-icons/bs";
 import { BsPencil } from "react-icons/bs";
+import Alert from "@mui/material/Alert";
+import Snackbar from "@mui/material/Snackbar";
 export default function BillList(props) {
    const { data, loading, error } = useFetch("http://localhost:8000/bills");
 
@@ -35,12 +37,26 @@ export default function BillList(props) {
    const viewDetail = () => {};
 
    const printBill = (id) => {
-      fetch(`http://localhost:8000/floors/${id}`, {
-         method: "delete",
-      });
       window.location.reload(false);
    };
 
+   const vertical = "top";
+   const horizontal = "center";
+   if (error) {
+      console.log(error);
+      return (
+         <Snackbar
+            anchorOrigin={{ vertical, horizontal }}
+            open={true}
+            autoHideDuration={6000}
+            onClose={() => {}}
+         >
+            <Alert onClose={() => {}} severity="error" sx={{ width: "100%" }}>
+               Lỗi load dữ liệu Customer!!!
+            </Alert>
+         </Snackbar>
+      );
+   }
    return (
       <div className="list">
          <div className="list__header">

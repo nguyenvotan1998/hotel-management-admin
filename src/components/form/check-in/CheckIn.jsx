@@ -7,6 +7,10 @@ import { timeNow, dateNow, tomorrow } from "../../../script";
 import Alert from "@mui/material/Alert";
 import Snackbar from "@mui/material/Snackbar";
 
+// function Validator() {
+//    function isRequired() {}
+// }
+
 export default function CheckIn(props) {
    const currentTime = timeNow();
    const currentDate = dateNow();

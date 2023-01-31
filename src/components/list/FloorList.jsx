@@ -7,6 +7,9 @@ import { BsPencil } from "react-icons/bs";
 import Alert from "@mui/material/Alert";
 import Snackbar from "@mui/material/Snackbar";
 
+const vertical = "top";
+const horizontal = "center";
+
 function AddFloor(props) {
    const [floorName, setFloorName] = useState();
 
@@ -24,7 +27,8 @@ function AddFloor(props) {
          }),
       });
       props.onLoad();
-      props.setOpen(false);
+      props.setAlert(() => ({ open: true, status: "success" }));
+      props.setOpen((prev) => ({ ...prev, add: false }));
    };
 
    return (
@@ -121,7 +125,10 @@ function FloorList(props) {
    const [open, setOpen] = useState({
       add: false,
       edit: false,
-      alert: false,
+   });
+   const [alert, setAlert] = useState({
+      open: false,
+      status: "",
    });
 
    const [floorEdit, setFloorEdit] = useState({
@@ -169,7 +176,7 @@ function FloorList(props) {
    };
 
    const handleClose = () => {
-      setOpen((prev) => ({ ...prev, alert: false }));
+      setAlert((prev) => ({ ...prev, open: false }));
    };
 
    if (error) {
@@ -179,16 +186,20 @@ function FloorList(props) {
    return (
       <div className="list">
          <Snackbar
-            open={open.alert}
-            autoHideDuration={6000}
+            open={alert.open}
+            autoHideDuration={3000}
             onClose={handleClose}
          >
             <Alert
                onClose={handleClose}
-               severity="error"
+               severity={alert.status}
                sx={{ width: "100%" }}
             >
-               Lỗi load dữ liệu!!!
+               {alert.status === "success"
+                  ? "Success!!!"
+                  : alert.status === "error"
+                  ? "Error!!!"
+                  : null}
             </Alert>
          </Snackbar>
          <div className="list__header">
@@ -202,6 +213,7 @@ function FloorList(props) {
             {open.add && (
                <AddFloor
                   setOpen={setOpen}
+                  setAlert={setAlert}
                   nameRef={nameRef}
                   onLoad={handleReLoad}
                />

@@ -15,6 +15,10 @@
     {
       "name": "Lầu 4",
       "id": 4
+    },
+    {
+      "name": "Lầu 5",
+      "id": 5
     }
   ],
   "room-types": [
@@ -55,30 +59,38 @@
       "numberBed": 1,
       "numberPeople": 2,
       "id": 3
+    },
+    {
+      "room": "201",
+      "floor": "Lầu 2",
+      "type": "Nhỏ",
+      "numberBed": 1,
+      "numberPeople": 2,
+      "id": 4
+    },
+    {
+      "room": "202",
+      "floor": "Lầu 2",
+      "type": "Trung",
+      "numberBed": 1,
+      "numberPeople": 2,
+      "id": 5
+    },
+    {
+      "room": "203",
+      "floor": "Lầu 2",
+      "type": "Lớn",
+      "numberBed": 1,
+      "numberPeople": 2,
+      "id": 6
     }
   ],
   "customers": [],
   "room-status": [
     {
       "room": "101",
-      "status": "using",
-      "id": 1,
-      "method": "hours",
-      "dateIn": "2023-01-22",
-      "hourIn": "08:59",
-      "dateOut": "2023-01-22",
-      "hourOut": "",
-      "prepay": "",
-      "prePayment": "",
-      "note": "",
-      "customer": "Võ Tấn Nguyên",
-      "services": [
-        {
-          "name": "Nước suối",
-          "number": "2",
-          "price": 20000
-        }
-      ]
+      "status": "empty",
+      "id": 1
     },
     {
       "room": "102",
@@ -89,6 +101,21 @@
       "room": "103",
       "status": "empty",
       "id": 3
+    },
+    {
+      "room": "201",
+      "status": "empty",
+      "id": 4
+    },
+    {
+      "room": "202",
+      "status": "empty",
+      "id": 5
+    },
+    {
+      "room": "203",
+      "status": "empty",
+      "id": 6
     }
   ],
   "room-prices": [

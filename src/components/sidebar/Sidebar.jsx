@@ -22,12 +22,12 @@ function Sidebar() {
       customer: false,
       bill: false,
    });
-
+   const hideTitle = () => {};
    return (
       <div className="sidebar">
          <div className="sidebar__logo">
             <span className="logo">Tấn Nguyên</span>
-            <BsList className="icon" />
+            <BsList className="icon" onClick={hideTitle} />
          </div>
          <ul className="sidebar__list-link">
             <li className="item-link">
